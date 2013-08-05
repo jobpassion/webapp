@@ -17,6 +17,6 @@
 
     <servlet-mapping>
         <servlet-name>springMVC</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/example/*</url-pattern>
     </servlet-mapping>
 </web-app>
