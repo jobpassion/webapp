@@ -23,6 +23,7 @@ public class MainController {
 	   
 	   
 	   @RequestMapping(value="/test2", produces="application/json")
+	   @ResponseBody
 	    public  TestEntity test2() {
 		   System.out.println("hello world");
 		   Map m = new HashMap();
