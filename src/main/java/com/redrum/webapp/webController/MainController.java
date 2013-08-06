@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.redrum.webapp.entity.TestEntity;
 @Controller
-@RequestMapping("/abc")
 public class MainController {
 	   @RequestMapping(value="/test")
 	    public String test() {
@@ -32,6 +31,16 @@ public class MainController {
 		   TestEntity te = new TestEntity();
 		   te.setStr("abcd");
 		   return te;
+	    }
+	   
+
+	   @RequestMapping(value="/test")
+	   @ResponseBody
+	    public String test3() {
+		   System.out.println("hello world");
+		   Map m = new HashMap();
+		   m.put("abf", 123);
+		   return "ÃÏ·²»ªÑ¾Ñ¾";
 	    }
 
 }
