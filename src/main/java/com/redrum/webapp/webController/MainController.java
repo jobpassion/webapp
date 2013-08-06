@@ -30,7 +30,7 @@ public class MainController {
 		   m.put("abf", 123);
 		   
 		   TestEntity te = new TestEntity();
-		   te.setStr("abc");
+		   te.setStr("abcd");
 		   return te;
 	    }
 
