@@ -13,5 +13,16 @@
 <!-- 			insert into ACCOUNT (NAME, EMAIL) values (#name#, #email#) -->
 <!-- 		</insert> -->
 <!-- 	</sqlMap> -->
+	
+    <settings   
+        cacheModelsEnabled="true"   
+        enhancementEnabled="true"   
+        lazyLoadingEnabled="true"   
+        errorTracingEnabled="true"   
+        maxRequests="32"   
+        maxSessions="10"   
+        maxTransactions="5"   
+        useStatementNamespaces="true"   
+    />  
 	<sqlMap resource="sqlmap/sql-map-test.xml" />
 </sqlMapConfig>  

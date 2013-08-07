@@ -34,7 +34,7 @@ public class MainController {
 	    }
 	   
 
-	   @RequestMapping(value="/test")
+	   @RequestMapping(value="/test3")
 	   @ResponseBody
 	    public String test3() {
 		   System.out.println("hello world");

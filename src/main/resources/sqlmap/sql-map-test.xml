@@ -4,7 +4,7 @@
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"        
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">  
   
-<sqlMap namespace="test">  
+<sqlMap namespace="T">  
     <!--resultMap class="com.pb.pojo.Student" id="Student">  
         <result property="sid" column="sid" javaType="java.lang.Integer" />  
         <result property="sname" column="sname" />  
@@ -16,7 +16,11 @@
     <select id="findAllStudent" resultMap="Student">  
         select * from student  
     </select-->  
-    <sql id="test">
+    <select id="findAllStudent" >  
+        select * from student  
+    </select>
+    
+    <sql id="test1">
         select * from test
     </sql>
 </sqlMap>
