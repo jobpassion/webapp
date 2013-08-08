@@ -16,11 +16,11 @@
     <select id="findAllStudent" resultMap="Student">  
         select * from student  
     </select-->  
-    <select id="findAllStudent" >  
-        select * from student  
-    </select>
     
-    <sql id="test1">
+    <statement id="test2" resultClass="hashmap">
+        select * from student
+    </statement>
+    <statement id="queryAllTest" resultClass="hashmap">
         select * from test
-    </sql>
+    </statement>
 </sqlMap>

@@ -8,6 +8,10 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:#{systemProperties['env']}application.properties" />
+	</bean>
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -20,16 +24,6 @@
 
 
 	<!-- 加载属性文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>
-					classpath:application.properties
-				</value>
-			</list>
-		</property>
-	</bean>
 	<!--结束 -->
 
 	<!-- ibatis配置 -->
@@ -45,8 +39,5 @@
 	
 	<bean id="daoHelper" class="com.redrum.webapp.dao.DaoHelper">
 		<property name="sqlMapClient" ref="sqlMapClient" />
-	</bean>
-	<bean id="testService" class="com.redrum.webapp.service.TestService" init-method="init">
-		<property name="daoHelper" ref="daoHelper" />
 	</bean>
 </beans>
