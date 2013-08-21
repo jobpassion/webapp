@@ -42,13 +42,15 @@ public class NoteService  implements  InitializingBean{
 		return sqlMapClient.queryForList("T.queryAllTest");
 	}
 	
-	public void addNote(Note note){
+	public Integer addNote(Note note){
 		try {
-			sqlMapClient.insert("note.insert-note", note);
+			Integer id = (Integer) sqlMapClient.insert("note.insert-note", note);
+			return id;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	
@@ -59,6 +61,15 @@ public class NoteService  implements  InitializingBean{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	public List<Note> queryNotesByUrl(String url, String userId) throws SQLException {
+		// TODO Auto-generated method stub
+		Map param = new HashMap();
+		param.put("url", url);
+		param.put("userId", userId);
+		return sqlMapClient.queryForList("note.queryNotesByUrl", param);
 	}
 
 }

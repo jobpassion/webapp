@@ -2,6 +2,7 @@ package com.redrum.webapp.chromeNote.web;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +30,15 @@ public class NoteController {
 	private NoteService noteService;
 
 	@RequestMapping(value = "/addNote")
-	public void addNote(HttpServletRequest request){
+	@ResponseBody
+	public Integer addNote(HttpServletRequest request, @RequestParam Long timestamp){
 		Note note = new Note();
 		try {
 			BeanUtils.populate(note, request.getParameterMap());
-			noteService.addNote(note);
+			if(null == note.getCreated())
+				note.setCreated(new Timestamp(timestamp));
+			note.setUpdated(new Timestamp(timestamp));
+			return noteService.addNote(note);
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,12 +46,15 @@ public class NoteController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 	@RequestMapping(value = "/saveNote")
-	public void saveNote(HttpServletRequest request){
+	@ResponseBody
+	public void saveNote(HttpServletRequest request, @RequestParam Long timestamp){
 		Note note = new Note();
 		try {
 			BeanUtils.populate(note, request.getParameterMap());
+			note.setUpdated(new Timestamp(timestamp));
 			noteService.saveNote(note);
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -55,6 +63,11 @@ public class NoteController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping(value = "/queryNotesByUrl")
+	@ResponseBody
+	public List<Note> queryNotesByUrl(@RequestParam String url, @RequestParam String userId) throws SQLException{
+		return noteService.queryNotesByUrl(url, userId);
 	}
 
 }
