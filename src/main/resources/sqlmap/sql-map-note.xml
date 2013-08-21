@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+  
+<!DOCTYPE sqlMap        
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"        
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">  
+  
+<sqlMap namespace="note">  
+    <!--resultMap class="com.pb.pojo.Student" id="Student">  
+        <result property="sid" column="sid" javaType="java.lang.Integer" />  
+        <result property="sname" column="sname" />  
+        <result property="age" column="age" javaType="java.lang.Integer" />  
+        <result property="tel" column="tel" />  
+        <result property="address" column="address" />  
+        <result property="cid" column="cid" javaType="java.lang.Integer" />  
+    </resultMap>  
+    <select id="findAllStudent" resultMap="Student">  
+        select * from student  
+    </select-->  
+    <insert id="insert-note-coppy">
+INSERT
+INTO
+    notes
+    (
+        user_id,
+        title,
+        DESC,
+        url,
+        list,
+        tag,
+        updated,
+        created
+    )
+    VALUES
+    (
+        #userId#,
+        #title#,
+        #desc#,
+        #url#,
+        #list#,
+        #tag#,
+        #updated#,
+        #created#
+    )
+    </insert>
+    <insert id="insert-note">
+INSERT
+INTO
+    chrome_note.notes
+    (
+        user_id,
+        title,
+        `DESC`,
+        url,
+        list,
+        tag,
+        updated,
+        created
+    )
+    VALUES
+    (
+        #userId#,
+        #title#,
+        #desc#,
+        #url#,
+        #list#,
+        #tag#,
+        #updated#,
+        #created#
+    )
+    </insert>
+    <update id="update-note">
+        UPDATE chrome_note.notes SET 
+        <isNotEmpty property="title" prepend=", ">title=#title#</isNotEmpty>
+        <isNotEmpty property="desc" prepend=", ">title=#desc#</isNotEmpty>
+        <isNotEmpty property="url" prepend=", ">title=#url#</isNotEmpty>
+        <isNotEmpty property="list" prepend=", ">title=#list#</isNotEmpty>
+        <isNotEmpty property="tag" prepend=", ">title=#tag#</isNotEmpty>
+        id = id
+    </update>
+</sqlMap>

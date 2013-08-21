@@ -87,6 +87,18 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		
+		<dependency>
+		  <groupId>org.mybatis</groupId>
+		  <artifactId>mybatis-spring</artifactId>
+		  <version>1.1.1</version>
+		</dependency>
+<dependency>
+  <groupId>commons-beanutils</groupId>
+  <artifactId>commons-beanutils</artifactId>
+  <version>20030211.134440</version>
+</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>webapp</finalName>
