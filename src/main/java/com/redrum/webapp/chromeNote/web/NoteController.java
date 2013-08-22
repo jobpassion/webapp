@@ -55,6 +55,8 @@ public class NoteController {
 		Note note = new Note();
 		try {
 			BeanUtils.populate(note, request.getParameterMap());
+			System.out.println("---------------" + note.getDesc());
+			System.out.println("---------------" + note.getTitle());
 			note.setUpdated(new Timestamp(timestamp));
 			noteService.saveNote(note);
 		} catch (IllegalAccessException e) {
