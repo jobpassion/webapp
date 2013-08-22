@@ -68,7 +68,7 @@
 	</update>
 	
 	<statement id="queryNotesByUrl" resultClass="com.redrum.webapp.chromeNote.entity.Note">
-		select * from chrome_note.notes where url = #url# and user_Id = #userId# order by updated desc
+		select * from chrome_note.notes where user_Id = #userId# order by updated desc
 	</statement>
 	
 	
