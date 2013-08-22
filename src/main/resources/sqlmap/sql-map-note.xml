@@ -35,6 +35,24 @@
 		#created#
 		)
 	</insert>
+	<insert id="insert-user">
+
+		<selectKey keyProperty="id" resultClass="Integer" type="post">
+			SELECT LAST_INSERT_ID() as id
+		</selectKey>
+		INSERT
+		INTO
+		chrome_note.user
+		(
+		user_id,
+		created
+		)
+		VALUES
+		(
+		#userId#,
+		#created#
+		)
+	</insert>
 	<update id="update-note">
 		UPDATE chrome_note.notes SET
 		<isNotEmpty property="title"  close=", ">`title`=#title#
@@ -51,5 +69,13 @@
 	
 	<statement id="queryNotesByUrl" resultClass="com.redrum.webapp.chromeNote.entity.Note">
 		select * from chrome_note.notes where url = #url# and user_Id = #userId# order by updated desc
+	</statement>
+	
+	
+	<statement id="loadTitles" resultClass="com.redrum.webapp.chromeNote.entity.Note">
+		select * from chrome_note.notes where ((title is not null and title != '') OR (`desc`!='' and `desc` is not null)) and user_id = #userId# order by updated desc
+	</statement>
+	<statement id="loadNote" resultClass="com.redrum.webapp.chromeNote.entity.Note">
+		select * from chrome_note.notes where id = #id# order by updated desc
 	</statement>
 </sqlMap>

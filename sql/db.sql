@@ -29,13 +29,29 @@ CREATE TABLE IF NOT EXISTS `notes` (
   `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
--- 正在导出表  chrome_note.notes 的数据：~0 rows (大约)
+-- 正在导出表  chrome_note.notes 的数据：~38 rows (大约)
+DELETE FROM `notes`;
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
-INSERT INTO `notes` (`id`, `user_id`, `title`, `desc`, `url`, `list`, `tag`, `updated`, `created`) VALUES
-	(15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-08-21 17:08:59');
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
+
+
+-- 导出  表 chrome_note.user 结构
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(32) DEFAULT NULL,
+  `user_id` varchar(64) DEFAULT NULL,
+  `password` varchar(32) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  chrome_note.user 的数据：~1 rows (大约)
+DELETE FROM `user`;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 
 -- 导出 webapp 的数据库结构
@@ -53,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `test` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  webapp.test 的数据：~2 rows (大约)
+DELETE FROM `test`;
 /*!40000 ALTER TABLE `test` DISABLE KEYS */;
 INSERT INTO `test` (`id`, `name`) VALUES
 	(1, 'fdafd'),

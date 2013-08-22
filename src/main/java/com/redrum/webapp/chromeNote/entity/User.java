@@ -1,9 +1,12 @@
 package com.redrum.webapp.chromeNote.entity;
 
+import java.sql.Timestamp;
+
 public class User {
 	private Integer id;
 	private String userName;
 	private String userId;
+	private Timestamp created;
 	public Integer getId() {
 		return id;
 	}
@@ -21,6 +24,12 @@ public class User {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public Timestamp getCreated() {
+		return created;
+	}
+	public void setCreated(Timestamp created) {
+		this.created = created;
 	}
 	
 	

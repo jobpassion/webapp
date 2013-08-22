@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.redrum.webapp.chromeNote.entity.Note;
+import com.redrum.webapp.chromeNote.entity.User;
 import com.redrum.webapp.dao.DaoHelper;
 @Service
 public class NoteService  implements  InitializingBean{
@@ -70,6 +71,32 @@ public class NoteService  implements  InitializingBean{
 		param.put("url", url);
 		param.put("userId", userId);
 		return sqlMapClient.queryForList("note.queryNotesByUrl", param);
+	}
+	public List<Note> loadTitles(String userId) throws SQLException {
+		// TODO Auto-generated method stub
+		Map param = new HashMap();
+		param.put("userId", userId);
+		return sqlMapClient.queryForList("note.loadTitles", param);
+	}
+
+
+	public List<Note> loadNote(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		Map param = new HashMap();
+		param.put("id", id);
+		return sqlMapClient.queryForList("note.loadNote", param);
+	}
+
+
+	public Integer addUser(User user) {
+		try {
+			Integer id = (Integer) sqlMapClient.insert("note.insert-user", user);
+			return id;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
