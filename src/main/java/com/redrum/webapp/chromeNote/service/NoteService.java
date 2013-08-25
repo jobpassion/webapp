@@ -21,6 +21,7 @@ import com.redrum.webapp.chromeNote.entity.Note;
 import com.redrum.webapp.chromeNote.entity.User;
 import com.redrum.webapp.dao.DaoHelper;
 @Service
+@SuppressWarnings({"unchecked", "rawtypes"} )
 public class NoteService  implements  InitializingBean{
 	@Autowired
 	private DaoHelper daoHelper;
@@ -72,10 +73,11 @@ public class NoteService  implements  InitializingBean{
 		param.put("userId", userId);
 		return sqlMapClient.queryForList("note.queryNotesByUrl", param);
 	}
-	public List<Note> loadTitles(String userId) throws SQLException {
+	public List<Note> loadTitles(String userId, String list) throws SQLException {
 		// TODO Auto-generated method stub
 		Map param = new HashMap();
 		param.put("userId", userId);
+		param.put("list", list);
 		return sqlMapClient.queryForList("note.loadTitles", param);
 	}
 
@@ -97,6 +99,29 @@ public class NoteService  implements  InitializingBean{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+
+	public void cleanEmptyData() {
+		// TODO Auto-generated method stub
+		try {
+			sqlMapClient.delete("note.clean_empty_data");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	public void emptyTrash() {
+		// TODO Auto-generated method stub
+
+		try {
+			sqlMapClient.delete("note.empty_trash");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

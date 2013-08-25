@@ -25,6 +25,7 @@ import com.redrum.webapp.service.TestService;
 
 @Controller
 @RequestMapping(value = "/note")
+@SuppressWarnings({"unchecked", "rawtypes"} )
 public class NoteController {
 
 	@Autowired
@@ -55,8 +56,6 @@ public class NoteController {
 		Note note = new Note();
 		try {
 			BeanUtils.populate(note, request.getParameterMap());
-			System.out.println("---------------" + note.getDesc());
-			System.out.println("---------------" + note.getTitle());
 			note.setUpdated(new Timestamp(timestamp));
 			noteService.saveNote(note);
 		} catch (IllegalAccessException e) {
@@ -76,8 +75,8 @@ public class NoteController {
 
 	@RequestMapping(value = "/loadTitles")
 	@ResponseBody
-	public List<Note> loadTitles(@RequestParam String userId) throws SQLException {
-		return noteService.loadTitles(userId);
+	public List<Note> loadTitles(@RequestParam String userId, String list) throws SQLException {
+		return noteService.loadTitles(userId, list);
 	}
 	@RequestMapping(value = "/loadNote")
 	@ResponseBody
@@ -91,6 +90,16 @@ public class NoteController {
 		user.setUserId(userId);
 		user.setCreated(new Timestamp(timestamp));
 		return noteService.addUser(user);
+	}
+	@RequestMapping(value = "/clean_empty_data")
+	@ResponseBody
+	public void cleanEmptyData() throws SQLException {
+		noteService.cleanEmptyData();
+	}
+	@RequestMapping(value = "/empty_trash")
+	@ResponseBody
+	public void emptyTrash() throws SQLException {
+		noteService.emptyTrash();
 	}
 
 }
