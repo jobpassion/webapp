@@ -9,5 +9,12 @@
     <default-channels>
         <channel ref="my-amf"/>
     </default-channels>
+    
+    
+<!--     <destination id="test"> -->
+<!--         <properties> -->
+<!--             <source>Test</source> -->
+<!--         </properties> -->
+<!--     </destination> -->
 
 </service>
