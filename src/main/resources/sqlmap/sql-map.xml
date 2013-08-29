@@ -26,4 +26,5 @@
     />  
 	<sqlMap resource="sqlmap/sql-map-test.xml" />
 	<sqlMap resource="sqlmap/sql-map-note.xml" />
+	<sqlMap resource="sqlmap/sql-map-chat.xml" />
 </sqlMapConfig>  

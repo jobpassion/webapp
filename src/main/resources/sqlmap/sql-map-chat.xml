@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+  
+<!DOCTYPE sqlMap        
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"        
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="chat">
+	<insert id="send">
+		INSERT
+INTO
+    webapp.chat_message
+    (
+        fromId,
+        toId,
+        message,
+        status
+    )
+    VALUES
+    (
+        #fromId#,
+        #toId#,
+        #message#,
+        #status#
+    )
+	</insert>
+	
+	<select id="queryNew" resultClass="com.redrum.webapp.entity.ChatMessageEntity">
+		SELECT *
+FROM
+    webapp.chat_message where status = 'new' and toId = #user# 
+	
+	</select>
+	<statement id="old">
+	update webapp.chat_message set status = 'old' where toId = #user#
+	</statement>
+</sqlMap>
