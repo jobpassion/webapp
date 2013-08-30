@@ -8,7 +8,7 @@
     </adapters>
 
     <default-channels>
-        <channel ref="my-polling-amf"/>
+        <channel ref="my-streaming-amf"/>
     </default-channels>
 
 </service>

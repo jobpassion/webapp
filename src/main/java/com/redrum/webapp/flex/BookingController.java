@@ -1,4 +1,7 @@
 package com.redrum.webapp.flex;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.flex.messaging.MessageTemplate;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,9 @@ public class BookingController {
 	
 	@RequestMapping(value="/bookings")
 	public String createBooking(){
-		template.send("bookingUpdates", "aaaa");
+		Map m = new HashMap();
+		m.put("a", "b");
+		template.send(m);
 		return null;
 	}
 	

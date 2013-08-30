@@ -51,7 +51,24 @@
 	</bean>
 	
 	<flex:message-broker />
-	<bean id="defaultMessageTemplate" class="org.springframework.flex.messaging.MessageTemplate" />
-	<flex:message-destination id="bookingUpdates" />
+	<bean id="defaultMessageTemplate" class="org.springframework.flex.messaging.MessageTemplate">
+		<property name="defaultDestination"><value>bookingUpdates</value></property>
+	</bean>
+	<flex:message-destination id="bookingUpdates" channels="my-streaming-amf"  />
+
+<!-- <flex:message-destination id="bookingUpdates"  -->
+<!-- 	message-broker="messageServiceBroker" -->
+<!-- 	channels="my-secure-amf"  -->
+<!-- 	allow-subtopics="true"  -->
+<!-- 	cluster-message-routing="broadcast"  -->
+<!-- 	message-time-to-live="1"  -->
+<!-- 	send-security-constraint="fooConstraint"  -->
+<!-- 	subscribe-security-constraint="barConstraint"  -->
+<!-- 	subscription-timeout-minutes="1"  -->
+<!-- 	subtopic-separator="/"  -->
+<!-- 	throttle-inbound-max-frequency="500" -->
+<!-- 	throttle-inbound-policy="ERROR"  -->
+<!-- 	throttle-outbound-max-frequency="500"  -->
+<!-- 	throttle-outbound-policy="IGNORE" />    -->
 	
 </beans>
