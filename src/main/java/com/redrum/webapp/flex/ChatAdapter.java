@@ -19,7 +19,7 @@ public class ChatAdapter extends flex.messaging.services.messaging.adapters.Acti
 	public Object invoke(Message message) {
 		// TODO Auto-generated method stub
 		ASObject object = (ASObject) message.getBody();
-		if("msg".equals(object.get("type"))){
+		if("msg".equals(message.getHeader("type"))){
 			
 		Integer id = chatService.send(message.getClientId().toString(), message.getHeader("to").toString(), object.get("message").toString());
 		object.put("id", id);
