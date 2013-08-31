@@ -38,17 +38,36 @@ public class ChatService {
 		Map m = new HashMap();
 		m.put("user", user);
 		List l = sqlMapClient.queryForList("chat.queryNew", m);
-		sqlMapClient.update("chat.old", user);
+//		sqlMapClient.update("chat.old", user);
 		return l;
 	}
 	
-	public void send(String from, String to, String message) throws SQLException{
+	public void setRead(List ids){
+		Map m = new HashMap();
+		m.put("ids", ids);
+		try {
+			sqlMapClient.update("chat.setRead", m);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Integer send(String from, String to, String message) {
+		Integer id = null;
 		ChatMessageEntity cme = new ChatMessageEntity();
 		cme.setFromId(from);
 		cme.setToId(to);
 		cme.setMessage(message);
 		cme.setStatus("new");
-		sqlMapClient.insert("chat.send", cme);
+		try {
+			id = (Integer) sqlMapClient.insert("chat.send", cme);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return id;
 	}
 
 }

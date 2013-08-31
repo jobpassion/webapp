@@ -54,7 +54,9 @@
 	<bean id="defaultMessageTemplate" class="org.springframework.flex.messaging.MessageTemplate">
 		<property name="defaultDestination"><value>bookingUpdates</value></property>
 	</bean>
-	<flex:message-destination id="bookingUpdates" channels="my-streaming-amf"  />
+	<bean id="chatAdapter" class="com.redrum.webapp.flex.ChatAdapter">
+	</bean>
+	<flex:message-destination message-time-to-live="10000"  service-adapter="chatAdapter" id="chat_dest" allow-subtopics="true" subtopic-separator="." channels="my-streaming-amf"  />
 
 <!-- <flex:message-destination id="bookingUpdates"  -->
 <!-- 	message-broker="messageServiceBroker" -->

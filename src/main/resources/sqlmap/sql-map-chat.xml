@@ -6,6 +6,10 @@
 
 <sqlMap namespace="chat">
 	<insert id="send">
+	
+		<selectKey keyProperty="id" resultClass="Integer" type="post">
+			SELECT LAST_INSERT_ID() as id
+		</selectKey>
 		INSERT
 INTO
     webapp.chat_message
@@ -32,5 +36,13 @@ FROM
 	</select>
 	<statement id="old">
 	update webapp.chat_message set status = 'old' where toId = #user#
+	</statement>
+	<statement id="setRead">
+	update webapp.chat_message set status = 'old' where id in 
+	
+        <iterate property="ids" open="(" close=")" conjunction=",  ">
+            #ids[]#
+        </iterate>
+	
 	</statement>
 </sqlMap>

@@ -4,6 +4,7 @@
 
     <adapters>
         <adapter-definition id="actionscript" class="flex.messaging.services.messaging.adapters.ActionScriptAdapter" default="true" />
+<!--         <adapter-definition id="simpleCustomAdapter" class="com.redrum.webapp.flex.SimpleCustomAdapter"  /> -->
         <!-- <adapter-definition id="jms" class="flex.messaging.services.messaging.adapters.JMSAdapter"/> -->
     </adapters>
 

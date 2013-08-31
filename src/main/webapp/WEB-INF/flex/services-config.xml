@@ -37,7 +37,9 @@
 			<endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/streamingamf"
 				class="flex.messaging.endpoints.StreamingAMFEndpoint" />
 			<properties>
-				<idle-timeout-minutes>0</idle-timeout-minutes>
+				
+<!-- 				<flex-client-outbound-queue-processor class="com.foo.YourProcessor"/> -->
+				<idle-timeout-minutes>1</idle-timeout-minutes>
 				<max-streaming-clients>50</max-streaming-clients>
 				<server-to-client-heartbeat-millis>5000</server-to-client-heartbeat-millis>
 <!-- 				<user-agent-settings> -->
