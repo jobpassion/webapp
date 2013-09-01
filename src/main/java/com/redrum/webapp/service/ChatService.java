@@ -28,7 +28,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import com.redrum.webapp.entity.ChatMessageEntity;
 
 @Service
-@RemotingDestination(channels={"my-amf"})
+@RemotingDestination(channels={"my-streaming-amf"})
 public class ChatService {
 
 	@Autowired
