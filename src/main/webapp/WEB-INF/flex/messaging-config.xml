@@ -9,7 +9,7 @@
     </adapters>
 
     <default-channels>
-        <channel ref="my-streaming-amf"/>
+        <channel ref="my-amf-longpoll"/>
     </default-channels>
 
 </service>

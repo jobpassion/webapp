@@ -1,11 +1,14 @@
 package com.redrum.webapp.entity;
 
+import java.sql.Timestamp;
+
 public class ChatMessageEntity {
 	private Integer id;
 	private String fromId;
 	private String toId;
 	private String status;
 	private String message;
+	private Timestamp timestamp;
 	public Integer getId() {
 		return id;
 	}
@@ -36,6 +39,14 @@ public class ChatMessageEntity {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	
 	
 	
 

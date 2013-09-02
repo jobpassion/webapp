@@ -2,6 +2,7 @@ package com.redrum.webapp.service;
 
 import java.lang.reflect.Member;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,18 +28,36 @@ import org.springframework.stereotype.Service;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.redrum.webapp.entity.ChatMessageEntity;
 
+import flex.messaging.FlexContext;
+import flex.messaging.client.FlexClient;
+import flex.messaging.client.FlexClientManager;
+import flex.messaging.config.FlexClientSettings;
+
 @Service
-@RemotingDestination(channels={"my-streaming-amf"})
+@RemotingDestination
 public class ChatService {
+	private Map cache = new HashMap();
 
 	@Autowired
 	private SqlMapClient sqlMapClient;
 	
-	public List<ChatMessageEntity> queryNew(String user) throws SQLException{
+	public List queryNew(String user, String to) throws SQLException{
+		cache.put(user, System.currentTimeMillis());
 		Map m = new HashMap();
 		m.put("user", user);
 		List l = sqlMapClient.queryForList("chat.queryNew", m);
+		if(null == l){
+			l = new ArrayList();
+		}
 //		sqlMapClient.update("chat.old", user);
+		FlexClient flexCliet = FlexContext.getFlexClient();
+		Map status = new HashMap();
+		if(null != cache.get(to)){
+			
+		long diff = System.currentTimeMillis() - (Long)(cache.get(to));
+		status.put("diff", diff);
+		}
+		l.add(0, status);
 		return l;
 	}
 	
