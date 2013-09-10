@@ -11,8 +11,12 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!-- 	<context:component-scan base-package="*" /> -->
-<!-- 	<mvc:annotation-driven /> -->
+<!-- 	<context:component-scan base-package="com.redrum.webapp" annotation-config="false"> -->
+<!-- 		<context:include-filter type="regex" expression="com\.redrum\.webapp\.webController.*"/> -->
+<!-- 	</context:component-scan> -->
+	<context:component-scan base-package="com.redrum.webapp.webController" />
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler/>
 	<!--bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/> 
 		<property name="prefix" value="/WEB-INF/jsp/"/> <property name="suffix" value=".jsp"/> 
@@ -25,7 +29,9 @@
 <!-- 		<property name="prefix" value="/WEB-INF/jsp/" /> -->
 <!-- 		<property name="suffix" value=".jsp" /> -->
 <!-- 	</bean> -->
-	
+<!-- 	<bean class="com.redrum.webapp.webController.MainController"> -->
+<!-- 		<property name="testService" ref="testService" /> -->
+<!-- 	</bean> -->
 	
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

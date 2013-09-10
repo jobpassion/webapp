@@ -88,5 +88,17 @@ public class ChatService {
 		
 		return id;
 	}
+	
+	public List queryModuleInfos(){
+		List l = new ArrayList();
+		try {
+			l = sqlMapClient.queryForList("chat.queryModuleInfos");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return l;
+		
+	}
 
 }

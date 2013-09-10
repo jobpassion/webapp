@@ -12,6 +12,20 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- 	<context:component-scan base-package="com.redrum.webapp" annotation-config="false"> -->
+<!-- 		<context:include-filter type="regex" expression="com\.redrum\.webapp\.flex.*"/> -->
+<!-- 	</context:component-scan> -->
+<!-- 	<context:component-scan base-package="*" /> -->
 
 
+	<context:component-scan base-package="com.redrum.webapp.flex" />
+	<mvc:annotation-driven />
+	<flex:message-broker />
+	<bean id="defaultMessageTemplate" class="org.springframework.flex.messaging.MessageTemplate">
+		<property name="defaultDestination"><value>bookingUpdates</value></property>
+	</bean>
+	<bean id="chatAdapter" class="com.redrum.webapp.flex.ChatAdapter">
+	</bean>
+	<flex:message-destination message-time-to-live="10000"  service-adapter="chatAdapter" id="chat_dest" allow-subtopics="true" subtopic-separator="." channels="my-streaming-amf"  />
+	
 </beans>

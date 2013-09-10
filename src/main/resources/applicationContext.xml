@@ -14,8 +14,11 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 <!-- 	<context:annotation-config  /> -->
-	<mvc:annotation-driven  />
-	<context:component-scan base-package="*" />
+<!-- 	<mvc:annotation-driven  /> -->
+	<context:component-scan base-package="com.redrum.webapp">
+		<context:exclude-filter type="regex" expression="com\.redrum\.webapp\.flex.*"/>
+		<context:exclude-filter type="regex" expression="com\.redrum\.webapp\.webController.*"/>
+	</context:component-scan>
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations"
@@ -50,13 +53,6 @@
 		<property name="sqlMapClient" ref="sqlMapClient" />
 	</bean>
 	
-	<flex:message-broker />
-	<bean id="defaultMessageTemplate" class="org.springframework.flex.messaging.MessageTemplate">
-		<property name="defaultDestination"><value>bookingUpdates</value></property>
-	</bean>
-	<bean id="chatAdapter" class="com.redrum.webapp.flex.ChatAdapter">
-	</bean>
-	<flex:message-destination message-time-to-live="10000"  service-adapter="chatAdapter" id="chat_dest" allow-subtopics="true" subtopic-separator="." channels="my-streaming-amf"  />
 
 <!-- <flex:message-destination id="bookingUpdates"  -->
 <!-- 	message-broker="messageServiceBroker" -->
@@ -73,4 +69,5 @@
 <!-- 	throttle-outbound-max-frequency="500"  -->
 <!-- 	throttle-outbound-policy="IGNORE" />    -->
 	
+
 </beans>

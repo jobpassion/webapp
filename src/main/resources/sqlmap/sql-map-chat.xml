@@ -34,6 +34,12 @@ FROM
     webapp.chat_message where status = 'new' and toId = #user# 
 	
 	</select>
+	<select id="queryModuleInfos" resultClass="hashmap">
+		SELECT *
+FROM
+    webapp.module_info 
+	
+	</select>
 	<statement id="old">
 	update webapp.chat_message set status = 'old' where toId = #user#
 	</statement>

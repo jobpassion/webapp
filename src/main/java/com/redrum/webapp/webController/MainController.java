@@ -19,6 +19,10 @@ public class MainController {
 	@Autowired
 	private TestService testService;
 
+	public void setTestService(TestService testService) {
+		this.testService = testService;
+	}
+
 	@RequestMapping(value = "/test")
 	public String test() {
 		System.out.println("hello world");
