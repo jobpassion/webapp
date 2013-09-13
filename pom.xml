@@ -204,6 +204,36 @@
 					</connectors>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5</version>
+				<goals>
+					<goal>install-file</goal>
+				</goals>
+				<configuration>
+					<file>lib/jelastic-maven-plugin-1.7.jar</file>
+					<groupId>com.jelastic</groupId>
+					<artifactId>jelastic-maven-plugin</artifactId>
+					<version>1.7-SNAPSHOT</version>
+					<packaging>jar</packaging>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5</version>
+				<goals>
+					<goal>install-file</goal>
+				</goals>
+				<configuration>
+					<file>lib/jelastic-maven-plugin-1.7.pom</file>
+					<groupId>com.jelastic</groupId>
+					<artifactId>jelastic-maven-plugin</artifactId>
+					<version>1.7-SNAPSHOT</version>
+					<packaging>pom</packaging>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
