@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function startTrans(){
+	//TODO
+	var inputStr = document.getElementById("inputText").value;
+	var midVar;
+	if(inputStr.indexOf("/gp/product/") >0){
+		midVar = inputStr.substring(inputStr.indexOf("/gp/product/") + 12, inputStr.indexOf("/", inputStr.indexOf("/gp/product/") + 12));
+	}else
+		midVar = inputStr.substring(inputStr.indexOf("dp/") + 3, inputStr.indexOf("/", inputStr.indexOf("dp/") + 3));
+	var outputStr = "http://www.amazon.com/gp/product/" + midVar + "/ref=as_li_qf_br_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=" + midVar + "&linkCode=as2&tag=weibo02a-20";
+	document.getElementById("outputText").value = outputStr;
+}
+function cn_startTrans(){
+	//TODO
+	var inputStr = document.getElementById("cn_inputText").value;
+	var midVar;
+	if(inputStr.indexOf("/gp/product/") >0){
+		midVar = inputStr.substring(inputStr.indexOf("/gp/product/") + 12, inputStr.indexOf("/", inputStr.indexOf("/gp/product/") + 12));
+	}else
+		midVar = inputStr.substring(inputStr.indexOf("dp/") + 3, inputStr.indexOf("/", inputStr.indexOf("dp/") + 3));
+	var outputStr = "http://www.amazon.cn/gp/product/" + midVar + "/ref=as_li_tf_tl?ie=UTF8&camp=536&creative=3200&creativeASIN=" + midVar + "&linkCode=as2&tag=weibo09b-23";
+	document.getElementById("cn_outputText").value = outputStr;
+}
+</script>
+</head>
+<body>
+美国：输入：<input id="inputText" />
+<button onclick="startTrans()">开始生成</button>
+输出：<input id="outputText" style="width:500px;" />
+<div style="clear: both;" />
+中国：输入：<input id="cn_inputText" />
+<button onclick="cn_startTrans()">开始生成</button>
+输出：<input id="cn_outputText" style="width:500px;" />
+</body>
+</html>
