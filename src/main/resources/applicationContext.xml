@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:task="http://www.springframework.org/schema/task"   
-	xmlns:flex="http://www.springframework.org/schema/flex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:flex="http://www.springframework.org/schema/flex"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/flex 
            http://www.springframework.org/schema/flex/spring-flex-1.0.xsd
+      http://www.springframework.org/schema/tx 
+      http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/task   
@@ -16,17 +18,20 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!-- 	<context:annotation-config  /> -->
-<!-- 	<mvc:annotation-driven  /> -->
+	<!-- <context:annotation-config /> -->
+	<!-- <mvc:annotation-driven /> -->
 	<context:component-scan base-package="com.redrum.webapp">
-		<context:exclude-filter type="regex" expression="com\.redrum\.webapp\.flex.*"/>
-		<context:exclude-filter type="regex" expression="com\.redrum\.webapp\.webController.*"/>
+		<context:exclude-filter type="regex"
+			expression="com\.redrum\.webapp\.flex.*" />
+		<context:exclude-filter type="regex"
+			expression="com\.redrum\.webapp\.webController.*" />
 	</context:component-scan>
-<task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+	<task:annotation-driven executor="myExecutor"
+		scheduler="myScheduler" />
 
-<task:executor id="myExecutor" pool-size="5"/>
+	<task:executor id="myExecutor" pool-size="5" />
 
-<task:scheduler id="myScheduler" pool-size="10"/>
+	<task:scheduler id="myScheduler" pool-size="10" />
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations"
@@ -60,22 +65,43 @@
 	<bean id="daoHelper" class="com.redrum.webapp.dao.DaoHelper">
 		<property name="sqlMapClient" ref="sqlMapClient" />
 	</bean>
-	
 
-<!-- <flex:message-destination id="bookingUpdates"  -->
-<!-- 	message-broker="messageServiceBroker" -->
-<!-- 	channels="my-secure-amf"  -->
-<!-- 	allow-subtopics="true"  -->
-<!-- 	cluster-message-routing="broadcast"  -->
-<!-- 	message-time-to-live="1"  -->
-<!-- 	send-security-constraint="fooConstraint"  -->
-<!-- 	subscribe-security-constraint="barConstraint"  -->
-<!-- 	subscription-timeout-minutes="1"  -->
-<!-- 	subtopic-separator="/"  -->
-<!-- 	throttle-inbound-max-frequency="500" -->
-<!-- 	throttle-inbound-policy="ERROR"  -->
-<!-- 	throttle-outbound-max-frequency="500"  -->
-<!-- 	throttle-outbound-policy="IGNORE" />    -->
-	
+
+	<!-- <flex:message-destination id="bookingUpdates" -->
+	<!-- message-broker="messageServiceBroker" -->
+	<!-- channels="my-secure-amf" -->
+	<!-- allow-subtopics="true" -->
+	<!-- cluster-message-routing="broadcast" -->
+	<!-- message-time-to-live="1" -->
+	<!-- send-security-constraint="fooConstraint" -->
+	<!-- subscribe-security-constraint="barConstraint" -->
+	<!-- subscription-timeout-minutes="1" -->
+	<!-- subtopic-separator="/" -->
+	<!-- throttle-inbound-max-frequency="500" -->
+	<!-- throttle-inbound-policy="ERROR" -->
+	<!-- throttle-outbound-max-frequency="500" -->
+	<!-- throttle-outbound-policy="IGNORE" /> -->
+	<bean id="myEmf"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="*" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="myEmf" />
+	</bean>
+	<tx:annotation-driven />
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 </beans>

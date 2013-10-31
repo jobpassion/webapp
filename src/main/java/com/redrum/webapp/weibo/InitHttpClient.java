@@ -27,6 +27,7 @@ public class InitHttpClient implements InitializingBean {
 	private HttpMethod httpMethod;
 	private PostMethod postMethod;
 	private HttpClient httpClient;
+	private WeiboMsg wwww;
 	private String ck;
 	
 	public HttpMethod getHttpMethod() {
