@@ -1,5 +1,8 @@
 package com.redrum.webapp.weibo;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +16,22 @@ public class WeiboMsg {
 	private Integer id;
 	private String title;
 	private String url;
+	@Column(columnDefinition = "text")
 	private String content;
 	private String imgUrl;
-	private String createDate;
-	private String lastModifyDate;
-	private String sendDate;
+	private Date createDate;
+	private Date lastModifyDate;
+	private Date sendDate;
 	private String source;
+	private String storeType;
+	
+	
+	public String getStoreType() {
+		return storeType;
+	}
+	public void setStoreType(String storeType) {
+		this.storeType = storeType;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -49,22 +62,22 @@ public class WeiboMsg {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getLastModifyDate() {
+	public Date getLastModifyDate() {
 		return lastModifyDate;
 	}
-	public void setLastModifyDate(String lastModifyDate) {
+	public void setLastModifyDate(Date lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
 	}
-	public String getSendDate() {
+	public Date getSendDate() {
 		return sendDate;
 	}
-	public void setSendDate(String sendDate) {
+	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
 	public String getSource() {

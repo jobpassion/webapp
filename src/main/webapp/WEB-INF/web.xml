@@ -5,10 +5,18 @@
 
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
+	<context-param>
+		<param-name>org.eclipse.jetty.servlet.Default.useFileMappedBuffer</param-name>
+		<param-value>false</param-value>
+	</context-param>
 
 	<context-param>
-	<param-name>contextConfigLocation</param-name>
-	<param-value>classpath*:/applicationContext*.xml</param-value>
+		<param-name>org.mortbay.jetty.servlet.Default.useFileMappedBuffer</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/applicationContext*.xml</param-value>
 	</context-param>
 
 	<filter>
@@ -39,19 +47,19 @@
 	</servlet-mapping>
 
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>flex</servlet-name> -->
-<!-- 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
-<!-- 		<init-param> -->
-<!-- 			<param-name>contextConfigLocation</param-name> -->
-<!-- 			<param-value>/WEB-INF/springMVC-servlet.xml</param-value> -->
-<!-- 		</init-param> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 	</servlet> -->
+	<!-- <servlet> -->
+	<!-- <servlet-name>flex</servlet-name> -->
+	<!-- <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
+	<!-- <init-param> -->
+	<!-- <param-name>contextConfigLocation</param-name> -->
+	<!-- <param-value>/WEB-INF/springMVC-servlet.xml</param-value> -->
+	<!-- </init-param> -->
+	<!-- <load-on-startup>1</load-on-startup> -->
+	<!-- </servlet> -->
 
 
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>flex</servlet-name> -->
-<!-- 		<url-pattern>/messagebroker/*</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>flex</servlet-name> -->
+	<!-- <url-pattern>/messagebroker/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
 </web-app>

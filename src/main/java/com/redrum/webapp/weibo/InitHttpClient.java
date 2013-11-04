@@ -22,12 +22,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InitHttpClient implements InitializingBean {
+public class InitHttpClient {
 	
 	private HttpMethod httpMethod;
 	private PostMethod postMethod;
 	private HttpClient httpClient;
-	private WeiboMsg wwww;
 	private String ck;
 	
 	public HttpMethod getHttpMethod() {
