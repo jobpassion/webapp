@@ -6,3 +6,4 @@ target
 /.apt_generated
 /.jpamodel
 /jpamodel
+php*
