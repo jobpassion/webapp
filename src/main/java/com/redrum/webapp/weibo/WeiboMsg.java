@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
-public class WeiboMsg {
+public class WeiboMsg extends BasicEntity {
 
 	@Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -24,19 +25,13 @@ public class WeiboMsg {
 	private Date sendDate;
 	private String source;
 	private String storeType;
-	
+	private Boolean immediately;
 	
 	public String getStoreType() {
 		return storeType;
 	}
 	public void setStoreType(String storeType) {
 		this.storeType = storeType;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getTitle() {
 		return title;
@@ -86,6 +81,21 @@ public class WeiboMsg {
 	public void setSource(String source) {
 		this.source = source;
 	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Boolean getImmediately() {
+		return immediately;
+	}
+	public void setImmediately(Boolean immediately) {
+		this.immediately = immediately;
+	}
+	
+	
+	
 	
 
 }

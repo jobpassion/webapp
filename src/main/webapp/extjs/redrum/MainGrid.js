@@ -29,6 +29,9 @@ Ext.define('extjs.redrum.MainGrid', {
 		}, {
 			name : 'imgUrl',
 			type : 'string'
+		}, {
+			name : 'clazz',
+			type : 'string'
 		} ],
 		proxy : {
 			type : 'ajax',
@@ -108,6 +111,17 @@ Ext.define('extjs.redrum.MainGrid', {
 							for ( var i in vs) {
 								record.set(i, vs[i]);
 							}
+							record.commit();
+							vs.id = record.data.id;
+							vs.clazz = record.data.clazz;
+							Ext.Ajax.request({
+							    url: baseUrl + 'weibo/save',
+							    params: vs,
+							    success: function(response){
+							        alert('success');
+							        // process server response here
+							    }
+							});
 							this.up('window').close();
 						}
 					}, {
@@ -119,6 +133,18 @@ Ext.define('extjs.redrum.MainGrid', {
 							for ( var i in vs) {
 								record.set(i, vs[i]);
 							}
+							record.commit();
+							vs.id = record.data.id;
+							vs.clazz = record.data.clazz;
+							vs.immediately = true;
+							Ext.Ajax.request({
+							    url: baseUrl + 'weibo/save',
+							    params: vs,
+							    success: function(response){
+							        alert('success');
+							        // process server response here
+							    }
+							});
 							this.up('window').close();
 						}
 					} ]
@@ -126,7 +152,14 @@ Ext.define('extjs.redrum.MainGrid', {
 			}).show();
 		}
 	},
-	columns : [ {
+	selModel:new Ext.selection.CheckboxModel( {
+        listeners:{
+            selectionchange: function(selectionModel, selected, options){
+                // Bunch of code to update store
+            }
+        }
+    }),
+	columns : [{
 		text : 'Id',
 		width : 50,
 		dataIndex : 'id'

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -38,6 +40,7 @@ public class InitHttpClient {
 	public PostMethod getPostMethod() {
 		return postMethod;
 	}
+	@PostConstruct
 	public void afterPropertiesSet() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -127,7 +130,7 @@ public class InitHttpClient {
 		postMethod.addRequestHeader("Accept", "*/*");
 		postMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
 		postMethod.addRequestHeader("Origin", "http://weibo.com");
-		postMethod.addRequestHeader("Content-Length", "101");
+//		postMethod.addRequestHeader("Content-Length", "101");
 		postMethod.addRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		postMethod.addRequestHeader("X-Requested-With", "XMLHttpRequest");
 		postMethod.addRequestHeader("Referer", "http://weibo.com/xiena?refer=interest");
