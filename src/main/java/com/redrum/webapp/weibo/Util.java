@@ -27,8 +27,11 @@ public class Util {
 			}
 
 			Object val = readMethod.invoke(source);
-			if(null != val)
+			if(null != val){
+				try{
 			writeMethod.invoke(dest, val);
+				}catch(Exception e){}
+			}
 		}
 	}
 }

@@ -20,12 +20,19 @@ public class WeiboService {
 
 	public List queryMsgs() {
 		// TODO Auto-generated method stub
-		return em.createQuery("from WeiboMsg where sendDate is null and immediately = false").getResultList();
+		return em.createQuery("from WeiboMsg where sendDate is null and (immediately is null or immediately = false )").getResultList();
 	}
 
 	@Transactional
-	public void delete(Integer id) {
-	    em.delete(id);
+	public void delete(BasicEntity o) {
+		Object o2 = null;
+		try {
+			o2 = em.find(Class.forName(o.getClazz()), o.getId());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    em.remove(o2);
 	}
 	@Transactional
 	public void save(BasicEntity o) {

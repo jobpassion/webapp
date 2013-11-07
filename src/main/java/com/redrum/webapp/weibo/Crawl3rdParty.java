@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class Crawl3rdParty {
 	
+	
 //	<a href="([^"]*)".*(?=Title)Title=(.*)(?='\]).*\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*商城：(亚马逊中国)</div>
 //	group1:url
 //	group3:title
@@ -82,7 +83,7 @@ public class Crawl3rdParty {
 		return sUrl;
 	}
 	
-//	@Scheduled(cron="1/10 * * * * *")
+	@Scheduled(cron="1/10 * * * * *")
 	@Transactional
 	public void excute(){
 		getMethod.recycle();
@@ -105,6 +106,14 @@ public class Crawl3rdParty {
 		Matcher matcher = pattern.matcher(response);
 		while(matcher.find()){
 			String url = matcher.group(1);
+			String identi = url.substring(url.lastIndexOf("/") + 1);
+			if(null != em.find(SmzdmIdentifi.class, identi))
+				continue;
+			else{
+				SmzdmIdentifi smz = new SmzdmIdentifi();
+				smz.setId(identi);
+				em.persist(smz);
+			}
 			url = trans(url);
 			System.out.println(url);
 			String title = matcher.group(2);
@@ -117,14 +126,16 @@ public class Crawl3rdParty {
 			Pattern pattern2 = Pattern.compile("\\[\\[([^]]*)\\]\\]");
 			Matcher matcher2= pattern2.matcher(content);
 			while(matcher2.find()){
-				String s = matcher2.group(1);
-				String s2 = trans(s);
-				if(s2.isEmpty())
-					content = content.replaceAll(matcher2.group(0), "");
-				else
-					content = content.replaceAll(s, s2);
-					
+//				String s = matcher2.group(1);
+//				String s2 = trans(s);
+//				if(s2.isEmpty())
+//					content = content.replaceAll(matcher2.group(0), "");
+//				else
+//					content = content.replaceAll(s, s2);
+				
+				content = content.replaceAll(matcher2.group(0), "");
 			}
+			content = content.replaceAll("\\[\\[\\]\\]", "");
 			System.out.println(content);
 			WeiboMsg wmsg = new WeiboMsg();
 			wmsg.setContent(content);

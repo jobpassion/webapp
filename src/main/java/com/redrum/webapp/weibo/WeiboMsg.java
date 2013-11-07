@@ -1,5 +1,6 @@
 package com.redrum.webapp.weibo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 @Entity
-public class WeiboMsg extends BasicEntity {
+public class WeiboMsg extends BasicEntity implements Serializable {
 
 	@Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )

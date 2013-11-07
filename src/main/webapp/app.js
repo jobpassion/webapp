@@ -70,7 +70,7 @@ Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
         						    var selections = mainGrid.getSelectionModel().getSelection();
         						    Ext.each(selections, function (item) {
                                           item.commit();
-                                          item.immediately = true;
+                                          item.data.immediately = true;
                 							Ext.Ajax.request({
                 							    url: baseUrl + 'weibo/save',
                 							    params: item.data,
