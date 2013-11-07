@@ -133,7 +133,7 @@ public class ExcuteWeibo {
 //				new NameValuePair("pic_id", ""),
 //				new NameValuePair("text", "中文")
 //		});
-		String s = wm.getUrl() + " " + wm.getContent();
+		String s = wm.getUrl() + "\n" + wm.getContent();
 		if(s.length() > 140){
 			s = s.substring(0, 137) + "...";
 		}
