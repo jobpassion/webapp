@@ -143,7 +143,7 @@ public class ExcuteWeibo {
 //		initHttpClient.getPostMethod().addParameter("rankid", "0");
 //		initHttpClient.getPostMethod().addParameter("pic_id", "");
 		try {
-			initHttpClient.getPostMethod().setRequestEntity(new StringRequestEntity("text=" + s + "&pic_id=&rank=0&rankid=&_surl=&location=&module=topquick&_t=0", PostMethod.FORM_URL_ENCODED_CONTENT_TYPE, "UTF-8"));
+			initHttpClient.getPostMethod().setRequestEntity(new StringRequestEntity("text=" + URLEncoder.encode(s) + "&pic_id=&rank=0&rankid=&_surl=&location=&module=topquick&_t=0", PostMethod.FORM_URL_ENCODED_CONTENT_TYPE, "UTF-8"));
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -172,6 +172,7 @@ public class ExcuteWeibo {
 				wm.setSendDate(new Date());
 				sendWeibo(wm);
 				weiboService.save(wm);
+				break;
 			}catch(Exception e){
 				e.printStackTrace();
 			}
