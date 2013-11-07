@@ -23,13 +23,14 @@ Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
 		name : 'HelloExt',
 		theme : 'ext-theme-access',
 		launch : function() {
+		    var mainGrid = Ext.create("extjs.redrum.MainGrid", {region:'center'});
 			Ext.create('Ext.container.Viewport', {
 				layout : 'border',
 				items : [ {
 					xtype : 'panel',
 					layout:'border',
 					region : 'center',
-					items : [Ext.create("extjs.redrum.MainGrid", {region:'center'}), {
+					items : [mainGrid, {
 						xtype:'panel',
 						region:'north',
 						height:100
@@ -43,18 +44,67 @@ Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
 						    	   xtype:'button',
 						    	   text:'排队',
 						    	   margin:'30, 30, 0, 0',
+        						handler : function() {
+        						    var selections = mainGrid.getSelectionModel().getSelection();
+        						    Ext.each(selections, function (item) {
+                                          item.commit();
+                							Ext.Ajax.request({
+                							    url: baseUrl + 'weibo/save',
+                							    params: item.data,
+                							    success: function(response){
+                							        //alert('success');
+                							        // process server response here
+                							    }
+                							});
+                                        });
+                                    mainGrid.getSelectionModel().deselectAll();
+        						},
 						    	   columnWidth:.15
 						    		   
 						       },{
 						    	   xtype:'button',
 						    	   text:'发送',
 						    	   margin:'30, 30, 0, 0',
+						    	   
+        						handler : function() {
+        						    var selections = mainGrid.getSelectionModel().getSelection();
+        						    Ext.each(selections, function (item) {
+                                          item.commit();
+                                          item.immediately = true;
+                							Ext.Ajax.request({
+                							    url: baseUrl + 'weibo/save',
+                							    params: item.data,
+                							    success: function(response){
+                							        //alert('success');
+                							        // process server response here
+                							    }
+                							});
+                                        });
+                                    mainGrid.getSelectionModel().deselectAll();
+        						},
 						    	   columnWidth:.15
 						    		   
 						       },{
 						    	   xtype:'button',
 						    	   text:'删除',
 						    	   margin:'30, 30, 0, 0',
+        						handler : function() {
+        						    var selections = mainGrid.getSelectionModel().getSelection();
+        						    Ext.each(selections, function (item) {
+                                          //item.commit();
+                                          //item.immediately = true;
+                                          mainGrid.store.remove(item);
+                							Ext.Ajax.request({
+                							    url: baseUrl + 'weibo/delete',
+                							    params: item.data,
+                							    success: function(response){
+                							        //alert('success');
+                							        // process server response here
+                							    }
+                							});
+                                        });
+                                    mainGrid.getSelectionModel().deselectAll();
+        						},
 						    	   columnWidth:.15
 						    		   
 						       }

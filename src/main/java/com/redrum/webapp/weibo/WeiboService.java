@@ -20,9 +20,13 @@ public class WeiboService {
 
 	public List queryMsgs() {
 		// TODO Auto-generated method stub
-		return em.createQuery("from WeiboMsg where sendDate is null").getResultList();
+		return em.createQuery("from WeiboMsg where sendDate is null and immediately = false").getResultList();
 	}
 
+	@Transactional
+	public void delete(Integer id) {
+	    em.delete(id);
+	}
 	@Transactional
 	public void save(BasicEntity o) {
 		// TODO Auto-generated method stub
@@ -57,6 +61,14 @@ public class WeiboService {
 		// TODO Auto-generated method stub
 		List result = em.createQuery("from WeiboMsg where immediately = true and sendDate is null", WeiboMsg.class).getResultList();
 		return result;
+	}
+	
+	public WeiboMsg getNextSend(){
+	    List<WeiboMsg> result = em.createQuery("from WeiboMsg where sendDate is null order by id asc", WeiboMsg.class).getResultList();
+	    if(result.size() > 0){
+	        return result.get(0);
+	    }
+	    return null;
 	}
 
 }

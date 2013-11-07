@@ -159,10 +159,13 @@ public class ExcuteWeibo {
 		}
 	}
 	
+	private Integer timeCount = 0;
+	
 	@Autowired
 	private WeiboService weiboService;
 	@Scheduled(cron="20 * * * * *")
 	public void runSend(){
+	    timeCount += 20;
 		List<WeiboMsg> list = weiboService.getCurrentSends();
 		for(WeiboMsg wm:list){
 			try{
@@ -173,6 +176,22 @@ public class ExcuteWeibo {
 				e.printStackTrace();
 			}
 		}
+		if(timeCount >= 1 * 60 * 60){
+		    if(list.size() == 0){
+		    WeiboMsg wm = weiboService.getNextSend();
+		    if(null != wm){
+			try{
+				wm.setSendDate(new Date());
+				sendWeibo(wm);
+				weiboService.save(wm);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		    }
+		    }
+		    timeCount = 0;
+		}
+		
 	}
 
 	public static void main(String[] args) throws Exception {

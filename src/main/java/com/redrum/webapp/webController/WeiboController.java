@@ -42,6 +42,13 @@ public class WeiboController {
 		}
 		weiboService.save(o);
 	}
+	
+	
+	@RequestMapping("delete")
+	@ResponseBody
+	public void delete(Integer id){
+		weiboService.delete(id);
+	}
 
 
 }
