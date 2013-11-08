@@ -4,7 +4,6 @@ function renderDate(val) {
 
 Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
 		'Ext.selection.CheckboxModel' ], function() {
-
 	window.edit = function(id) {
 		var editor = new Ext.Editor({
 			autoSize : {
@@ -19,11 +18,22 @@ Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
 		editor.startEdit(Ext.get('tpl' + id));
 
 	};
+	
+                							Ext.Ajax.request({
+                							    url: baseUrl + 'weibo/check',
+                							    success: function(response){
+                							        //alert('success');
+                							        // process server response here
+                							        Ext.get('checkWeibo').setText(response);
+                							    }
+                							});
+	
 	var app = Ext.application({
 		name : 'HelloExt',
 		theme : 'ext-theme-access',
 		launch : function() {
 		    var mainGrid = Ext.create("extjs.redrum.MainGrid", {region:'center'});
+		    
 			Ext.create('Ext.container.Viewport', {
 				layout : 'border',
 				items : [ {
@@ -33,6 +43,27 @@ Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.Editor',
 					items : [mainGrid, {
 						xtype:'panel',
 						region:'north',
+						layout:'absolute',
+						items:[
+						       {
+						    	   xtype:'button',
+						    	   text:'check weibo',
+						    	   id:'checkWeibo',
+						    	   x:100,
+						    	   margin:'30, 30, 0, 0',
+        						handler : function() {
+        						    
+			Ext.create('Ext.window.Window', {
+				title : 'set Cookie',
+				width : 600,
+				layout : 'fit',
+				items : [{
+				    xtype:'form'
+				}]
+			}).show();
+        						}
+						       }
+                        ],
 						height:100
 					}, {
 						xtype:'panel',

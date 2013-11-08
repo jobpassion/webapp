@@ -97,14 +97,6 @@ public class InitHttpClient {
 			httpMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
 			httpMethod.addRequestHeader("Cookie", ck);
 			httpClient.executeMethod(httpMethod);
-			String response = httpMethod.getResponseBodyAsString();
-			boolean succ = response.indexOf("我的首页") > 0;
-			System.out.println(succ);
-			if (!succ && count<3){
-				count++;
-				afterPropertiesSet();
-			}
-			else {
 				postMethod = new PostMethod();
 
 				postMethod
@@ -121,10 +113,28 @@ public class InitHttpClient {
 								"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
 				postMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
 				postMethod.addRequestHeader("Cookie", ck);
+			
+			if (!checkWeibo() && count<3){
+				count++;
+				afterPropertiesSet();
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public boolean checkWeibo(){
+		try {
+		    resetMethod();
+			httpClient.executeMethod(httpMethod);
+			String response = httpMethod.getResponseBodyAsString();
+			boolean succ = response.indexOf("我的首页") > 0;
+			System.out.println(succ);
+			return succ;
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return false;
 	}
 
 	@Scheduled(cron = "1 */5 * * * *")

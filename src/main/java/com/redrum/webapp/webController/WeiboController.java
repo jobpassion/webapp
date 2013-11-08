@@ -86,6 +86,12 @@ public class WeiboController {
 			initHttpClient.setCk(cookie);
 		return initHttpClient.getCk();
 	}
+	
+	@RequestMapping("check")
+	@ResponseBody
+	public String checkWeibo(){
+	    return initHttpClient.checkWeibo();
+	}
 
 
 }
