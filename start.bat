@@ -1,0 +1,1 @@
+mvn jetty:run -Denv=dev. -Dfile.encoding=UTF-8
