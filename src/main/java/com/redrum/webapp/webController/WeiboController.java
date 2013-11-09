@@ -89,7 +89,7 @@ public class WeiboController {
 	
 	@RequestMapping("check")
 	@ResponseBody
-	public String checkWeibo(){
+	public Boolean checkWeibo(){
 	    return initHttpClient.checkWeibo();
 	}
 

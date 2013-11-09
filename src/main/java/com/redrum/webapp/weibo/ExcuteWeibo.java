@@ -133,9 +133,15 @@ public class ExcuteWeibo {
 //				new NameValuePair("pic_id", ""),
 //				new NameValuePair("text", "中文")
 //		});
-		String s = wm.getUrl() + "\n" + wm.getContent();
-		if(s.length() > 140){
-			s = s.substring(0, 137) + "...";
+		String s = wm.getTitle() + " " + wm.getContent();
+		int cl = 130;
+		int ul = wm.getUrl().length();
+		ul = ul - 140;
+		if(ul > 0){
+			cl = cl - new Double(Math.ceil(0.5 * ul)).intValue();
+		}
+		if(s.length() > cl){
+			s = s.substring(0, cl - 4) + "...";
 		}
 //			initHttpClient.getPostMethod().addParameter("text", new String("中文".getBytes(), "UTF-8"));
 //		initHttpClient.getPostMethod().addParameter("location", "");
@@ -143,7 +149,7 @@ public class ExcuteWeibo {
 //		initHttpClient.getPostMethod().addParameter("rankid", "0");
 //		initHttpClient.getPostMethod().addParameter("pic_id", "");
 		try {
-			initHttpClient.getPostMethod().setRequestEntity(new StringRequestEntity("text=" + URLEncoder.encode(s) + "&pic_id=&rank=0&rankid=&_surl=&location=&module=topquick&_t=0", PostMethod.FORM_URL_ENCODED_CONTENT_TYPE, "UTF-8"));
+			initHttpClient.getPostMethod().setRequestEntity(new StringRequestEntity("text=" + URLEncoder.encode(s + "\n" + wm.getUrl()) + "&pic_id=&rank=0&rankid=&_surl=&location=&module=topquick&_t=0", PostMethod.FORM_URL_ENCODED_CONTENT_TYPE, "UTF-8"));
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -163,7 +169,7 @@ public class ExcuteWeibo {
 	
 	@Autowired
 	private WeiboService weiboService;
-	@Scheduled(cron="20 * * * * *")
+	@Scheduled(cron="0/20 * * * * *")
 	public void runSend(){
 	    timeCount += 20;
 		List<WeiboMsg> list = weiboService.getCurrentSends();
