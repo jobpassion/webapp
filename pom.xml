@@ -191,13 +191,13 @@
 			<artifactId>selenium-java</artifactId>
 			<version>2.37.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.adobe</groupId>
-			<artifactId>xalan</artifactId>
-			<version>1.3</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/xalan.jar</systemPath>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.adobe</groupId> -->
+<!-- 			<artifactId>xalan</artifactId> -->
+<!-- 			<version>1.3</version> -->
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>${basedir}/lib/xalan.jar</systemPath> -->
+<!-- 		</dependency> -->
 		<!-- <dependency> -->
 		<!-- <groupId>commons-httpclient</groupId> -->
 		<!-- <artifactId>commons-httpclient</artifactId> -->
@@ -241,7 +241,11 @@
 		<!-- <version>${slf4j.version}</version> -->
 		<!-- <scope>runtime</scope> -->
 		<!-- </dependency> -->
-
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 		<!-- HSQL -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.hsqldb</groupId> -->
@@ -262,11 +266,29 @@
 		<!-- <version>${aspectj.version}</version> -->
 		<!-- <scope>runtime</scope> -->
 		<!-- </dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-jpamodelgen</artifactId> -->
-<!-- 			<version>1.3.0.Final</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-jpamodelgen</artifactId> -->
+		<!-- <version>1.3.0.Final</version> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.weibo</groupId>
+			<artifactId>weibo</artifactId>
+			<version>1.3</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/weibo4j-oauth2.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codeartisans.thirdparties.swing</groupId>
+			<artifactId>org-openide-util</artifactId>
+			<version>8.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>2.13</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>webapp</finalName>
@@ -298,8 +320,8 @@
 
 				</configuration>
 			</plugin>
-			
-			
+
+
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>

@@ -20,6 +20,10 @@ public class WeiboMsg extends BasicEntity implements Serializable {
 	private String url;
 	@Column(columnDefinition = "text")
 	private String content;
+	@Column(columnDefinition = "text")
+	private String souceContent;
+	@Column(columnDefinition = "text")
+	private String dzContent;
 	private String imgUrl;
 	private Date createDate;
 	private Date lastModifyDate;
@@ -27,6 +31,10 @@ public class WeiboMsg extends BasicEntity implements Serializable {
 	private String source;
 	private String storeType;
 	private Boolean immediately;
+	private String shotUrl;
+	private Integer sendHtzj;
+	private Integer sendGht;
+	private Integer send55ht;
 	
 	public String getStoreType() {
 		return storeType;
@@ -93,6 +101,42 @@ public class WeiboMsg extends BasicEntity implements Serializable {
 	}
 	public void setImmediately(Boolean immediately) {
 		this.immediately = immediately;
+	}
+	public String getShotUrl() {
+		return shotUrl;
+	}
+	public void setShotUrl(String shotUrl) {
+		this.shotUrl = shotUrl;
+	}
+	public Integer getSendHtzj() {
+		return sendHtzj;
+	}
+	public void setSendHtzj(Integer sendHtzj) {
+		this.sendHtzj = sendHtzj;
+	}
+	public String getSouceContent() {
+		return souceContent;
+	}
+	public void setSouceContent(String souceContent) {
+		this.souceContent = souceContent;
+	}
+	public String getDzContent() {
+		return dzContent;
+	}
+	public void setDzContent(String dzContent) {
+		this.dzContent = dzContent;
+	}
+	public Integer getSendGht() {
+		return sendGht;
+	}
+	public void setSendGht(Integer sendGht) {
+		this.sendGht = sendGht;
+	}
+	public Integer getSend55ht() {
+		return send55ht;
+	}
+	public void setSend55ht(Integer send55ht) {
+		this.send55ht = send55ht;
 	}
 	
 	

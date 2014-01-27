@@ -1,5 +1,7 @@
 Ext.define('extjs.redrum.MainGrid', {
 	extend : 'Ext.grid.Panel',
+    initComponent: function () {
+        Ext.apply(this,{
 	store : Ext.create('Ext.data.Store', {
 		model : 'User',
 		fields : [ {
@@ -49,107 +51,7 @@ Ext.define('extjs.redrum.MainGrid', {
 	}) ],
 	listeners : {
 		itemdblclick : function(_this, record, item) {
-			Ext.create('Ext.window.Window', {
-				title : 'Detail',
-				width : 600,
-				layout : 'fit',
-				items : Ext.create('Ext.form.Panel', {
-					bodyPadding : 5,
-					width : '100%',
-					url : 'save-form.php',
-					layout : 'anchor',
-					defaults : {
-						anchor : '100%',
-						border : false
-					},
-					border : false,
-					defaultType : 'textfield',
-					items : [ Ext.create('Ext.panel.Panel', {
-						layout : {
-							type : 'hbox',
-							align : 'middle'
-						},
-						border : false,
-						items : [ {
-							xtype : 'label',
-							forId : 'myFieldId',
-							text : '亚马逊',
-							width : '15%',
-							margin : '0 0 0 10'
-						}, {
-							xtype : 'textfield',
-							width : '60%',
-							name : 'title',
-							value : record.data.title,
-							allowBlank : false
-						}, {
-							xtype : 'label',
-							forId : 'myFieldId',
-							text : '2013-03-01',
-							width : '20%',
-							margin : '0 0 0 20'
-						} ]
-					}), {
-						xtype : 'textfield',
-						width : '100%',
-						name : 'url',
-						value : record.data.url,
-						margin : '20 10 0 10',
-						allowBlank : false
-					}, {
-						width : '100%',
-						xtype : 'textareafield',
-						name : 'content',
-						value : record.data.content,
-						height : 250,
-						margin : '20 10 0 10',
-					} ],
-					buttons : [ {
-						text : '排队',
-						handler : function() {
-							var vs = this.up('form').getValues(false, true);
-							for ( var i in vs) {
-								record.set(i, vs[i]);
-							}
-							record.commit();
-							vs.id = record.data.id;
-							vs.clazz = record.data.clazz;
-							Ext.Ajax.request({
-							    url: baseUrl + 'weibo/save',
-							    params: vs,
-							    success: function(response){
-							        alert('success');
-							        // process server response here
-							    }
-							});
-							this.up('window').close();
-						}
-					}, {
-						text : '确定',
-						formBind : true, //only enabled once the form is valid
-						disabled : true,
-						handler : function() {
-							var vs = this.up('form').getValues(false, true);
-							for ( var i in vs) {
-								record.set(i, vs[i]);
-							}
-							record.commit();
-							vs.id = record.data.id;
-							vs.clazz = record.data.clazz;
-							vs.immediately = true;
-							Ext.Ajax.request({
-							    url: baseUrl + 'weibo/save',
-							    params: vs,
-							    success: function(response){
-							        alert('success');
-							        // process server response here
-							    }
-							});
-							this.up('window').close();
-						}
-					} ]
-				})
-			}).show();
+			Ext.create('extjs.redrum.DetailWindow', {record:record,store:_this.store}).show();
 		}
 	},
 	selModel:new Ext.selection.CheckboxModel( {
@@ -192,4 +94,17 @@ Ext.define('extjs.redrum.MainGrid', {
 		},
 		dataIndex : 'url'
 	} ]
+        });
+        this.callParent(arguments);
+        var _this = this;
+        var runner = new Ext.util.TaskRunner();
+        var task = runner.start({
+            run: function(){
+            	_this.store.reload();
+            	console.log('reload data store');
+            },
+            interval: 30000
+        });
+    }
 });
+

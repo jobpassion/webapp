@@ -6,10 +6,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.redrum.webapp.weibo.entity.FansEntity;
+import com.redrum.webapp.weibo.entity.TimeRangeEntity;
+import com.redrum.webapp.weibo.entity.WeiboAccount;
 
 @Service
 public class WeiboService {
@@ -37,7 +42,8 @@ public class WeiboService {
 	@Transactional
 	public void save(BasicEntity o) {
 		// TODO Auto-generated method stub
-		Object o2 = null;
+		Object o2 = o;
+		if(null !=o.getId()){
 		try {
 			o2 = em.find(Class.forName(o.getClazz()), o.getId());
 		} catch (ClassNotFoundException e1) {
@@ -51,22 +57,13 @@ public class WeiboService {
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IntrospectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}}
 		em.merge(o2);
 	}
 	@Transactional
 	public List getCurrentSends() {
 		// TODO Auto-generated method stub
-		List result = em.createQuery("from WeiboMsg where immediately = true and sendDate is null", WeiboMsg.class).getResultList();
+		List result = em.createQuery("from WeiboMsg where sendDate is null", WeiboMsg.class).getResultList();
 		return result;
 	}
 	
@@ -77,5 +74,42 @@ public class WeiboService {
 	    }
 	    return null;
 	}
+
+	public List<TimeRangeEntity> getRanges() {
+		// TODO Auto-generated method stub
+		List result = em.createQuery("from TimeRangeEntity", TimeRangeEntity.class).getResultList();
+		return result;
+	}
+
+	public boolean existFan(String id) {
+		// TODO Auto-generated method stub
+		TypedQuery<FansEntity> query = em.createQuery("from FansEntity where userId = :userId", FansEntity.class);
+		query.setParameter("userId", id);
+		if(query.getResultList().size() > 0)
+			return true;
+		return false;
+		
+	}
+
+	public List<FansEntity> getNextFansToFollow() {
+		// TODO Auto-generated method stub
+		TypedQuery<FansEntity> query = em.createQuery("from FansEntity where following = :following order by id asc", FansEntity.class);
+		query.setParameter("following", false);
+		query.setMaxResults(1);
+		return query.getResultList();
+	}
+	public List<FansEntity> getNextFansToFollowL() {
+		// TODO Auto-generated method stub
+		TypedQuery<FansEntity> query = em.createQuery("from FansEntity where following = :following order by id desc", FansEntity.class);
+		query.setParameter("following", false);
+		query.setMaxResults(1);
+		return query.getResultList();
+	}
+	
+	public List<WeiboAccount> queryAccounts(){
+
+		return em.createQuery("from WeiboAccount where enable = 1").getResultList();
+	}
+
 
 }

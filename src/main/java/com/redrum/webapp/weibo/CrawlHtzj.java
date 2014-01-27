@@ -36,24 +36,22 @@ import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONObject;
 
 @Service
-public class Crawl3rdParty {
+public class CrawlHtzj {
 	
 	
-//	<a href="([^"]+)".+Title=([^\n]+)'\][^\n]+\n[^\n]+\n[^\n]+商城：[^\n]*\n.*(美国亚马逊)[^\n]+\n[^\n]+\n[^\n]+\n([\s\S]+?)<div
+//	<th class="(common|new)">\s*\n.*<a href="([^"]*)" onclick=.*>(.*)</a>
 //	<a href="([^"]+)".+Title=([^\n]+)'\][^\n]+\n[^\n]+\n[^\n]+\n[^\n]+\n[^\n]+\n[^\n]+\n[^\n]+商城：[^\n]*\n.*(亚马逊中国)[^\n]+\n[^\n]+\n[^\n]+\n([\s\S]+?)<div
 //	group1:url
 //	group2:title
 //	group3:商城
 //	private String regexp = "<a href=\"([^\"]*)\".*(?=Title)Title=(.*)(?='\\]).*\\r\\n.*\\r\\n.*\\r\\n.*\\r\\n.*\\r\\n.*商城：(亚马逊中国)</div>";
-	private String[] regexp = new String[]{"<a href=\"([^\"]+)\".+Title=([^\\n]+)'\\][^\\n]+\\n[^\\n]+\\n[^\\n]+商城：[^\\n]*\\n.*(美国亚马逊)[^\\n]+\\n[^\\n]+\\n[^\\n]+\\n([\\s\\S]+?)<div"
-			,"<a href=\"([^\"]+)\".+Title=([^\\n]+)'\\][^\\n]+\\n[^\\n]+\\n[^\\n]+\\n[^\\n]+\\n[^\\n]+\\n[^\\n]+\\n[^\\n]+商城：[^\\n]*\\n.*(亚马逊中国)[^\\n]+\\n[^\\n]+\\n[^\\n]+\\n([\\s\\S]+?)<div"
+	private String[] regexp = new String[]{"<th class=\"(common|new)\">\\s*\\n.*<a href=\"([^\"]*)\" onclick=.*>(.*)</a>"
 	};
-	private String[] url = new String[]{"http://www.smzdm.com/page/1"
-			,"http://www.smzdm.com/page/1"
+	private String[] url = new String[]{"http://www.haitaozj.com/forum-38-1.html"
 	};
-	private String[] storeType = new String[]{"亚马逊中国","美国亚马逊"};
-//	private HttpClient httpClient;
-//	private GetMethod getMethod;
+	private String[] storeType = new String[]{"美国亚马逊"};
+	private HttpClient httpClient;
+	private GetMethod getMethod;
 	
 	@Value("${access_token}")
 	private String access_token ="2.00Lj6eJEiAwHIBdb114dc228iRIPyD";
@@ -62,7 +60,7 @@ public class Crawl3rdParty {
 	private InitHttpClient initHttpClient;
 	@PersistenceContext
 	private EntityManager em;
-	private Logger logger = Logger.getLogger(Crawl3rdParty.class);
+	private Logger logger = Logger.getLogger(CrawlHtzj.class);
 	private HttpURLConnection getGetMethod(String url){
 		try {
 			URL u = new URL(url);
@@ -81,17 +79,17 @@ public class Crawl3rdParty {
 	
 	@PostConstruct
 	public void init(){
-//		httpClient = new HttpClient();
+		httpClient = new HttpClient();
 //		try {
 ////			httpClient.startSession(new URL(url));
-//	        HostConfiguration conf = new HostConfiguration();
-//	        conf.setHost(new URI(url));
-//	        httpClient.setHostConfiguration(conf);
+////	        HostConfiguration conf = new HostConfiguration();
+////	        conf.setHost(new URI(url));
+////	        httpClient.setHostConfiguration(conf);
 //		}catch (URIException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		getMethod = new GetMethod();
+		getMethod = new GetMethod();
 	}
 	
 	public String trans(String sUrl){
@@ -162,28 +160,41 @@ public class Crawl3rdParty {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		HttpURLConnection c = getGetMethod(url[i]);
+//		HttpURLConnection c = getGetMethod(url[i]);
+//		try {
+//			c.connect();
+//			response = IOUtils.toString(c.getInputStream());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			continue;
+//		}
+//		c.disconnect();
+		getMethod = new GetMethod(url[i]);
 		try {
-			c.connect();
-			response = IOUtils.toString(c.getInputStream());
-		} catch (Exception e) {
+			httpClient.executeMethod(getMethod);
+			getMethod.releaseConnection();
+			httpClient.executeMethod(getMethod);
+			response = new String(getMethod.getResponseBody(), "gbk");
+		} catch (HttpException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			continue;
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		c.disconnect();
 		response = response.replaceAll("什么值得买", "海淘");
 		response = response.replaceAll("&nbsp;", " ");
 		Pattern pattern = Pattern.compile(regexp[i]);
 		Matcher matcher = pattern.matcher(response);
-//		try {
-//			FileUtils.write(new File("a.html"), response);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			FileUtils.write(new File("a.html"), response);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(0==i){
-			logger.info("craw amazon start");
+			logger.info("craw haitaozhijia start");
 		}
 		while(matcher.find()){
 			String url = matcher.group(1);
@@ -266,27 +277,9 @@ public class Crawl3rdParty {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		/*Crawl3rdParty crawl = new Crawl3rdParty();
-//		crawl.initHttpClient = new InitHttpClient();
-//		crawl.initHttpClient.afterPropertiesSet();
-		crawl.init();
-		crawl.excute();*/
-//		URL url = new URL("http://www.dwz.cn/create.php");
-//		HttpURLConnection c = (HttpURLConnection) url.openConnection();
-//		c.setRequestMethod("POST");
-//		c.setDoOutput(true);
-//		IOUtils.write("access_type=web&url=http://weibo.com/3807150373/profile?topnav=1&wvr=5&user=1", c.getOutputStream(), "UTF-8");
-//		System.out.println(IOUtils.toString(c.getInputStream()));
-		
-//		String sUrl = "a中bc文de";
-//		sUrl = sUrl.replaceAll("[\u4e00-\u9fa5]+", ""); 
-//		System.out.println(sUrl);
-		
-		
-		String s = FileUtils.readFileToString(new File("a.html"));
-		Pattern pattern = Pattern.compile("<a href=\"([^\"]+)\".+Title=([^'^\\n]+).+\\n.+\\n.+\\n.+\\n.+\\n.+商城：(亚马逊中国)</div>\\n.+\\n.+\\n([\\s\\S]+?)<div");
-		Matcher matcher = pattern.matcher(s);
-		System.out.println(matcher.find());
+		CrawlHtzj craw = new CrawlHtzj();
+		craw.init();
+		craw.excute();
 	}
 
 }
