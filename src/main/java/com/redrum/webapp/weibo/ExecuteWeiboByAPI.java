@@ -36,7 +36,7 @@ public class ExecuteWeiboByAPI {
 
 	private Logger logger = Logger.getLogger(ExecuteWeiboByAPI.class);
 
-	@Scheduled(cron = "0 0/5 * * * *")
+//	@Scheduled(cron = "0 0/5 * * * *")
 	private void followInterval() {
 //		logger.info("follow start");
 		List<FansEntity> fans = weiboService.getNextFansToFollow();

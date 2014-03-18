@@ -253,7 +253,19 @@ public class InitHttpClient {
 			resetMethod();
 			httpMethod.setPath("/");
 			httpClient.executeMethod(httpMethod);
-			String response = new String(httpMethod.getResponseBody(), "UTF-8");
+			String response = "";
+			if(httpMethod.getStatusCode()==200)
+			{
+				
+//				logger.info("check httpclient 200");
+				try{
+				response= new String(httpMethod.getResponseBody(), "UTF-8");
+				}catch(Exception e){
+					logger.error(e.getMessage());
+				}
+			}else{
+				logger.info("check httpClient " + httpMethod.getStatusCode());
+			}
 			// HttpURLConnection connection =
 			// resetGetConnection("http://weibo.com/");
 			// connection.connect();

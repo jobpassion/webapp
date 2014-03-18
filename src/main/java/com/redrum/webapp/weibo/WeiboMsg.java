@@ -17,6 +17,7 @@ public class WeiboMsg extends BasicEntity implements Serializable {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Integer id;
 	private String title;
+	@Column(columnDefinition = "text")
 	private String url;
 	@Column(columnDefinition = "text")
 	private String content;

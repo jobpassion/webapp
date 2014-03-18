@@ -453,7 +453,7 @@ public class ExcuteWeibo {
 //					weiboService.save(wm);
 				}
 				if(wm.getSendGht()==null||wm.getSendGht()!=1){
-//					wm.setSendGht(1);
+					wm.setSendGht(1);
 //					executeGhaitao.send(wm);
 				}
 				if(wm.getSend55ht()==null||wm.getSend55ht()!=1){

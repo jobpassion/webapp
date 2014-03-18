@@ -35,7 +35,7 @@ import weibo4j.ShortUrl;
 import weibo4j.model.WeiboException;
 import weibo4j.org.json.JSONObject;
 
-@Service
+//@Service
 public class CrawlHtzj {
 	
 	

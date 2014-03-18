@@ -31,6 +31,7 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.DefaultHttpParams;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.entity.StringEntity;
@@ -65,6 +66,13 @@ public class ExecuteHtzj {
 				"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.49 Safari/537.36"));
 		httpClient.getHostConfiguration().getParams()
 				.setParameter("http.default-headers", headers);
+
+//		httpClient.getParams().setParameter(
+//				HttpMethodParams.HTTP_CONTENT_CHARSET, "UTF-8");
+		httpClient.getParams().setBooleanParameter(
+				HttpMethodParams.SINGLE_COOKIE_HEADER, true);
+		httpClient.getParams().setCookiePolicy(
+				CookiePolicy.BROWSER_COMPATIBILITY);
 		httpClient.setTimeout(30000);
 	}
 
