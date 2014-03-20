@@ -166,7 +166,8 @@ public class Crawl3rdParty {
 		return url;
 	}
 	
-	@Scheduled(cron="10 * * * * *")
+//	@Scheduled(cron="10 * * * * *")
+	@Scheduled(fixedDelay=60000)
 	@Transactional
 	public void excute(){
 		for(int i=0; i<regexp.length; i++){

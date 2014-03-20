@@ -252,7 +252,12 @@ public class InitHttpClient {
 		try {
 			resetMethod();
 			httpMethod.setPath("/");
+			try{
 			httpClient.executeMethod(httpMethod);
+			}catch(Exception e){
+				logger.error(e.getMessage());
+				return false;
+			}
 			String response = "";
 			if(httpMethod.getStatusCode()==200)
 			{
@@ -353,7 +358,8 @@ public class InitHttpClient {
 	}
 	
 
-	@Scheduled(cron = "0 0/5 * * * *")
+//	@Scheduled(cron = "0 0/5 * * * *")
+	@Scheduled(fixedDelay=300000)
 	public void intervalCheck(){
 
 		List<WeiboAccount> accounts = weiboService.queryAccounts();
@@ -365,39 +371,39 @@ public class InitHttpClient {
 			initCookie();
 
 			try {
-				httpMethod = new GetMethod();
-				httpMethod.setPath("/");
-				httpMethod
-						.addRequestHeader(
-								"User-Agent",
-								"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36");
-				httpMethod.addRequestHeader("Host", "weibo.com");
-				httpMethod.addRequestHeader("Connection", "keep-alive");
-				httpMethod
-						.addRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
-				httpMethod.addRequestHeader("Cache-Control", "max-age=0");
-				httpMethod
-						.addRequestHeader("Accept",
-								"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-				httpMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
-//				httpMethod.addRequestHeader("Cookie", account.getCookie());
-				// httpClient.executeMethod(httpMethod);
-				postMethod = new PostMethod();
-
-				postMethod
-						.addRequestHeader(
-								"User-Agent",
-								"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36");
-				postMethod.addRequestHeader("Host", "weibo.com");
-				postMethod.addRequestHeader("Connection", "keep-alive");
-				postMethod
-						.addRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
-				postMethod.addRequestHeader("Cache-Control", "max-age=0");
-				postMethod
-						.addRequestHeader("Accept",
-								"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-				postMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
-//				postMethod.addRequestHeader("Cookie", account.getCookie());
+//				httpMethod = new GetMethod();
+//				httpMethod.setPath("/");
+//				httpMethod
+//						.addRequestHeader(
+//								"User-Agent",
+//								"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36");
+//				httpMethod.addRequestHeader("Host", "weibo.com");
+//				httpMethod.addRequestHeader("Connection", "keep-alive");
+//				httpMethod
+//						.addRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
+//				httpMethod.addRequestHeader("Cache-Control", "max-age=0");
+//				httpMethod
+//						.addRequestHeader("Accept",
+//								"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+//				httpMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
+////				httpMethod.addRequestHeader("Cookie", account.getCookie());
+//				// httpClient.executeMethod(httpMethod);
+//				postMethod = new PostMethod();
+//
+//				postMethod
+//						.addRequestHeader(
+//								"User-Agent",
+//								"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36");
+//				postMethod.addRequestHeader("Host", "weibo.com");
+//				postMethod.addRequestHeader("Connection", "keep-alive");
+//				postMethod
+//						.addRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
+//				postMethod.addRequestHeader("Cache-Control", "max-age=0");
+//				postMethod
+//						.addRequestHeader("Accept",
+//								"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+//				postMethod.addRequestHeader("Accept-Encoding", "deflate,sdch");
+////				postMethod.addRequestHeader("Cookie", account.getCookie());
 
 				if (!checkWeibo() && count < 1) {
 					count++;

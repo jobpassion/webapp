@@ -374,8 +374,9 @@ public class ExcuteWeibo {
 	@Autowired
 	private WeiboService weiboService;
 
-	@Scheduled(cron = "0 0/5 * * * *")
+//	@Scheduled(cron = "0 0/5 * * * *")
 //	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(fixedDelay=300000)
 	public void runSend() {
 		timeCount += 5 * 60;
 		List<WeiboMsg> list = weiboService.getCurrentSends();
