@@ -114,6 +114,7 @@ public class Crawl3rdParty {
 //			e1.printStackTrace();
 //		}
 		HttpURLConnection c = getGetMethod(sUrl);
+		c.setReadTimeout(60 * 1000);
 //		getMethod.recycle();
 //		getMethod.setPath(sUrl.substring(sUrl.indexOf("smzdm.com") + "smzdm.com".length()));
 		try {
@@ -186,8 +187,10 @@ public class Crawl3rdParty {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		logger.info("190");
 		HttpURLConnection c = getGetMethod(url[i]);
 		try {
+			c.setReadTimeout(60 * 1000);
 			c.connect();
 			response = IOUtils.toString(c.getInputStream(), "utf-8");
 		} catch (Exception e) {
@@ -210,6 +213,7 @@ public class Crawl3rdParty {
 		if(0==i){
 			logger.info("craw amazon start");
 		}
+		logger.info("216");
 		while(matcher.find()){
 			String url = matcher.group(1);
 			String identi = url.substring(url.lastIndexOf("/") + 1);
@@ -220,6 +224,7 @@ public class Crawl3rdParty {
 			logger.debug(url);
 			String title = matcher.group(2);
 			String content = matcher.group(4);
+			logger.info("227");
 			if(null != em.find(SmzdmIdentifi.class, identi))
 				continue;
 			else{
