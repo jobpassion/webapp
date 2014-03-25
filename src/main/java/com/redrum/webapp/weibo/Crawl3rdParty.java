@@ -290,6 +290,8 @@ public class Crawl3rdParty {
 			em.merge(wmsg);
 		}
 		}
+		
+			logger.info("craw amazon end");
 	}
 	
 	@SuppressWarnings("unused")
