@@ -26,6 +26,8 @@ public class WeiboMsg extends BasicEntity implements Serializable {
 	@Column(columnDefinition = "text")
 	private String dzContent;
 	private String imgUrl;
+	@Column(columnDefinition = "text")
+	private String priceImgUrl;
 	private Date createDate;
 	private Date lastModifyDate;
 	private Date sendDate;
@@ -138,6 +140,12 @@ public class WeiboMsg extends BasicEntity implements Serializable {
 	}
 	public void setSend55ht(Integer send55ht) {
 		this.send55ht = send55ht;
+	}
+	public String getPriceImgUrl() {
+		return priceImgUrl;
+	}
+	public void setPriceImgUrl(String priceImgUrl) {
+		this.priceImgUrl = priceImgUrl;
 	}
 	
 	

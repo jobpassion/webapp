@@ -62,7 +62,7 @@ public class Crawl3rdParty {
 	};
 	private String[] storeType = new String[]{"亚马逊中国","美国亚马逊"};
 //	private HttpClient httpClient;
-//	private GetMethod getMethod;
+	private GetMethod getMethod;
 	
 	@Value("${access_token}")
 	private String access_token ="2.00Lj6eJEiAwHIBdb114dc228iRIPyD";
@@ -260,6 +260,14 @@ public class Crawl3rdParty {
 				break;
 			}
 			
+			if("美国亚马逊".equals(storeType)){
+				if(url.indexOf("product/")>0){
+					String productId = url.substring(url.indexOf("product/") + "product/".length(), url.indexOf("/", url.indexOf("product/") + "product/".length()));
+					String priceImg = transPriceImg(productId);
+					wmsg.setPriceImgUrl(priceImg);
+				}
+			}
+			
 			content = content.replaceAll("<[^>]+>", "");
 			content = content.replaceAll("\\s+", "");
 			
@@ -299,6 +307,11 @@ public class Crawl3rdParty {
 			logger.info("craw amazon end");
 	}
 	
+	private String transPriceImg(String productId) {
+	// TODO Auto-generated method stub
+		return "http://charts.camelcamelcamel.com/us/" + productId + "/amazon.png?force=1&zero=0&w=725&h=440&desired=false&legend=1&ilt=1&tp=all&fo=0&lang=en";
+}
+
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
 		/*Crawl3rdParty crawl = new Crawl3rdParty();
