@@ -261,8 +261,13 @@ public class Crawl3rdParty {
 			}
 			
 			if("美国亚马逊".equals(storeType)){
-				if(url.indexOf("product/")>0){
-					String productId = url.substring(url.indexOf("product/") + "product/".length(), url.indexOf("/", url.indexOf("product/") + "product/".length()));
+				if(url.indexOf("/B0")>0){
+					int st = url.indexOf("/B0") + 1;
+					int end = url.indexOf("?", st);
+					if(url.indexOf("/", st)>0 && url.indexOf("/", st)<end){
+						end = url.indexOf("/", st);
+					}
+					String productId = url.substring(st, end);
 					String priceImg = transPriceImg(productId);
 					wmsg.setPriceImgUrl(priceImg);
 				}
@@ -309,7 +314,26 @@ public class Crawl3rdParty {
 	
 	private String transPriceImg(String productId) {
 	// TODO Auto-generated method stub
-		return "http://charts.camelcamelcamel.com/us/" + productId + "/amazon.png?force=1&zero=0&w=725&h=440&desired=false&legend=1&ilt=1&tp=all&fo=0&lang=en";
+		boolean ret = true;
+		getMethod = new GetMethod("http://camelcamelcamel.com/product/" + productId);
+		try {
+			initHttpClient.getHttpClient().executeMethod(getMethod);
+			String response = new String(getMethod.getResponseBody(), "utf-8");
+			getMethod.releaseConnection();
+			if(response.indexOf("Last 1 price changes")>=0){
+				ret = false;
+			}
+		} catch (HttpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(ret)
+			return "http://charts.camelcamelcamel.com/us/" + productId + "/amazon.png?force=1&zero=0&w=725&h=440&desired=false&legend=1&ilt=1&tp=all&fo=0&lang=en";
+		else
+			return null;
 }
 
 	@SuppressWarnings("unused")

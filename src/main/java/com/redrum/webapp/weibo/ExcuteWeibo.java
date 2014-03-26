@@ -28,10 +28,14 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
@@ -39,9 +43,11 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.protocol.HTTP;
 import org.apache.log4j.Logger;
@@ -329,24 +335,40 @@ public class ExcuteWeibo {
 //			baos.flush();
 //			byte[] imageInByte = baos.toByteArray();
 //			baos.close();
-			GetMethod method = new GetMethod(wm.getImgUrl());
-			initHttpClient.getHttpClient().executeMethod(method);
-			byte[] imageInByte = method.getResponseBody();
-			imageItem = new ImageItem(imageInByte);
-			statuses = URLEncoder.encode(statuses);
+//			GetMethod method = new GetMethod(wm.getImgUrl());
+//			initHttpClient.getHttpClient().executeMethod(method);
+//			byte[] imageInByte = method.getResponseBody();
+//			imageItem = new ImageItem(imageInByte);
+//			statuses = URLEncoder.encode(statuses);
 			}else{
 			}
 			
 			for(WeiboAccount wa:weiboService.queryAccounts()){
 				try{
-				Timeline tm = new Timeline();
-				tm.client.setToken(wa.getAccessToken());
+//				Timeline tm = new Timeline();
+//				tm.client.setToken(wa.getAccessToken());
 				if(null != wm.getImgUrl()){
-					Status status = tm.UploadStatus(statuses, imageItem);
-					Log.logInfo(status.toString());
+//					Status status = tm.UploadStatus(statuses, imageItem);
+//					Log.logInfo(status.toString());
+					
+
+					//for test
+
+					GetMethod method = new GetMethod(wm.getImgUrl());
+					initHttpClient.getHttpClient().executeMethod(method);
+					byte[] imageInByte = method.getResponseBody();
+					initHttpClient.resetMethod();
+					initHttpClient.getPostMethod().setURI(new URI("http://picupload.service.weibo.com/interface/pic_upload.php?app=miniblog&data=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&mime=image/jpeg&ct=0.3205334846861660"));
+					 RequestEntity re = new ByteArrayRequestEntity(imageInByte , "application/octet-stream");
+					initHttpClient.getPostMethod().setRequestHeader("Content-type", "application/octet-stream");
+					initHttpClient.getPostMethod().setRequestEntity(re);
+					initHttpClient.getHttpClient().executeMethod(initHttpClient.getPostMethod());
+					logger.info((initHttpClient.getPostMethod().getResponseBodyAsString()));
+					initHttpClient.getPostMethod().releaseConnection();
+					
 				}else{
-					Status status = tm.UpdateStatus(statuses);
-					Log.logInfo(status.toString());
+//					Status status = tm.UpdateStatus(statuses);
+//					Log.logInfo(status.toString());
 				}
 				}catch(Exception e){e.printStackTrace();}
 			}
@@ -504,11 +526,12 @@ public class ExcuteWeibo {
 //		}
 		
 		//http://pn.zdmimg.com/201312/18/328f9913.jpg_n1.jpg
-		BufferedImage image = ImageIO.read(new URL("http://pn.zdmimg.com/201312/18/328f9913.jpg_n1.jpg"));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write( image, "jpg", baos );
-		baos.flush();
-		byte[] imageInByte = baos.toByteArray();
-		baos.close();
+//		BufferedImage image = ImageIO.read(new URL("http://pn.zdmimg.com/201312/18/328f9913.jpg_n1.jpg"));
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		ImageIO.write( image, "jpg", baos );
+//		baos.flush();
+//		byte[] imageInByte = baos.toByteArray();
+//		baos.close();
+
 	}
 }
