@@ -177,9 +177,9 @@ public class InitHttpClient {
 			post.setParameter("returntype", "META");
 			httpClient.executeMethod(post);
 			s = new String(post.getResponseBody(), "UTF-8");
-			idx = s.indexOf("location.replace(\"")
-					+ "location.replace(\"".length();
-			String url = s.substring(idx, s.indexOf("\"", idx));
+			idx = s.indexOf("location.replace('")
+					+ "location.replace('".length();
+			String url = s.substring(idx, s.indexOf("'", idx));
 //			System.out.println(url);
 			logger.debug(url);
 			method = new GetMethod(url);
