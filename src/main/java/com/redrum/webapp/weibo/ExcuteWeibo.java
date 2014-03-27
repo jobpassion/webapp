@@ -324,7 +324,7 @@ public class ExcuteWeibo {
 		 */
 
 		// String statuses = URLEncoder.encode(s + "\n" + wm.getUrl());
-		String statuses = s + "\n" + wm.getUrl();
+		String statuses = s + "\n" + wm.getShotUrl();
 		try {
 			ImageItem imageItem = null;
 			if(null != wm.getImgUrl()){
@@ -347,29 +347,82 @@ public class ExcuteWeibo {
 				try{
 //				Timeline tm = new Timeline();
 //				tm.client.setToken(wa.getAccessToken());
+				String pic_id = "";
+				initHttpClient.account = wa;
+				initHttpClient.resetMethod();
 				if(null != wm.getImgUrl()){
 //					Status status = tm.UploadStatus(statuses, imageItem);
 //					Log.logInfo(status.toString());
 					
 
 					//for test
-
 					GetMethod method = new GetMethod(wm.getImgUrl());
 					initHttpClient.getHttpClient().executeMethod(method);
 					byte[] imageInByte = method.getResponseBody();
+					method.releaseConnection();
 					initHttpClient.resetMethod();
 					initHttpClient.getPostMethod().setURI(new URI("http://picupload.service.weibo.com/interface/pic_upload.php?app=miniblog&data=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&mime=image/jpeg&ct=0.3205334846861660"));
 					 RequestEntity re = new ByteArrayRequestEntity(imageInByte , "application/octet-stream");
 					initHttpClient.getPostMethod().setRequestHeader("Content-type", "application/octet-stream");
 					initHttpClient.getPostMethod().setRequestEntity(re);
 					initHttpClient.getHttpClient().executeMethod(initHttpClient.getPostMethod());
-					logger.info((initHttpClient.getPostMethod().getResponseBodyAsString()));
+					String uploadImage = initHttpClient.getPostMethod().getResponseBodyAsString();
+					logger.info(uploadImage);
 					initHttpClient.getPostMethod().releaseConnection();
+					
+					uploadImage = uploadImage.substring(uploadImage.indexOf("pid\":\"") + "pid\":\"".length(), uploadImage.indexOf("\",\"name"));
+					
+					pic_id += uploadImage;
+					
+					
+					
+				}
+				
+				if(null != wm.getPriceImgUrl()){
+//					Status status = tm.UploadStatus(statuses, imageItem);
+//					Log.logInfo(status.toString());
+					
+
+					//for test
+
+					GetMethod method = new GetMethod(wm.getPriceImgUrl());
+					initHttpClient.getHttpClient().executeMethod(method);
+					byte[] imageInByte = method.getResponseBody();
+					method.releaseConnection();
+					initHttpClient.resetMethod();
+					initHttpClient.getPostMethod().setURI(new URI("http://picupload.service.weibo.com/interface/pic_upload.php?app=miniblog&data=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&mime=image/jpeg&ct=0.3205334846861660"));
+					 RequestEntity re = new ByteArrayRequestEntity(imageInByte , "application/octet-stream");
+					initHttpClient.getPostMethod().setRequestHeader("Content-type", "application/octet-stream");
+					initHttpClient.getPostMethod().setRequestEntity(re);
+					initHttpClient.getHttpClient().executeMethod(initHttpClient.getPostMethod());
+					String uploadImage = initHttpClient.getPostMethod().getResponseBodyAsString();
+					logger.debug(uploadImage);
+					initHttpClient.getPostMethod().releaseConnection();
+					
+					uploadImage = uploadImage.substring(uploadImage.indexOf("pid\":\"") + "pid\":\"".length(), uploadImage.indexOf("\",\"name"));
+					
+					pic_id += " " + uploadImage;
+					
+					
 					
 				}else{
 //					Status status = tm.UpdateStatus(statuses);
 //					Log.logInfo(status.toString());
 				}
+				
+
+				initHttpClient.resetMethod();
+				initHttpClient.getPostMethod().setURI(new URI("http://www.weibo.com/aj/mblog/add?_wv=5&__rnd=1395888325731"));
+				initHttpClient.getPostMethod().addParameter("text", statuses);
+				initHttpClient.getPostMethod().addParameter("pic_id", pic_id);
+				initHttpClient.getPostMethod().addParameter("rank", "0");
+				initHttpClient.getPostMethod().addParameter("location", "home");
+				initHttpClient.getPostMethod().addParameter("module", "stissue");
+				initHttpClient.getPostMethod().addParameter("_t", "0");
+				initHttpClient.getHttpClient().executeMethod(initHttpClient.getPostMethod());
+				
+				logger.debug(initHttpClient.getPostMethod().getResponseBodyAsString());
+				initHttpClient.getPostMethod().releaseConnection();
 				}catch(Exception e){e.printStackTrace();}
 			}
 		} catch (Exception e) {

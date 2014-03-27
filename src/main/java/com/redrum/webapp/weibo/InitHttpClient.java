@@ -286,18 +286,6 @@ public class InitHttpClient {
 //			System.out.println(succ);
 			logger.info(succ);
 			httpMethod.releaseConnection();
-			
-
-			//for test
-			resetMethod();
-			postMethod.setURI(new URI("http://picupload.service.weibo.com/interface/pic_upload.php?app=miniblog&data=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&url=weibo.com/u/2350795254&markpos=1&logo=1&nick=%40Red_Wolf_&marks=1&mime=image/jpeg&ct=0.3205334846861660"));
-			byte[] bytes = IOUtils.toByteArray(new URL("file:///D:\\Documents\\Pictures\\Photo Stream\\My Photo Stream\\IMG_0008.JPG"));
-			 RequestEntity re = new ByteArrayRequestEntity(bytes , "application/octet-stream");
-			postMethod.setRequestHeader("Content-type", "application/octet-stream");
-			postMethod.setRequestEntity(re);
-			httpClient.executeMethod(postMethod);
-			System.out.println(postMethod.getResponseBodyAsString());
-			// System.out.println(response);
 			return succ;
 		} catch (Exception e1) {
 			e1.printStackTrace();
