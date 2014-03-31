@@ -320,7 +320,7 @@ public class Crawl3rdParty {
 			initHttpClient.getHttpClient().executeMethod(getMethod);
 			String response = new String(getMethod.getResponseBody(), "utf-8");
 			getMethod.releaseConnection();
-			if(response.indexOf("Last 1 price changes")>=0){
+			if(response.indexOf("Last 1 price changes")>=0 || response.indexOf("data for this price type.\">Amazon</span>")>=0){
 				ret = false;
 			}
 		} catch (HttpException e) {
